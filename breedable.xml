@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" method="upgrade">
+    <name>com_breedable</name>
+    <creationDate>2014-06-10</creationDate>
+    <copyright>Copyright (C) 2014. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <author>Stephen Bishop</author>
+    <authorEmail>support@dazzlesoftware.org</authorEmail>
+    <authorUrl>http://dazzlesoftware.org</authorUrl>
+    <version>1.0.2</version>
+    <description>Second Life Breedables</description>
+    
+    <scriptfile>script.php</scriptfile>
+    
+    <install> <!-- Runs on install -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall> <!-- Runs on uninstall -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+
+    <files folder="site">
+        <filename>index.html</filename>
+        <filename>breedable.php</filename>
+        <filename>controller.php</filename>
+        <filename>router.php</filename>
+        <folder>views</folder>
+        <folder>models</folder>
+        <folder>controllers</folder>
+        <folder>helpers</folder>
+    </files>
+    <languages folder="site">
+        
+			<language tag="en-GB">language/en-GB/en-GB.com_breedable.ini</language>
+    </languages>
+    <administration>
+        <menu img="components/com_breedable/assets/images/s_com_breedable.png" >COM_BREEDABLE</menu>
+        <submenu>
+            
+			<menu link="option=com_breedable&amp;view=configurations" view="configurations" img="components/com_breedable/assets/images/s_configurations.png" alt="Breedable/Configurations">COM_BREEDABLE_TITLE_CONFIGURATIONS</menu>
+
+			<menu link="option=com_breedable&amp;view=bundles" view="bundles" img="components/com_breedable/assets/images/s_bundles.png" alt="Breedable/Bundles">COM_BREEDABLE_TITLE_BUNDLES</menu>
+
+			<menu link="option=com_breedable&amp;view=birthss" view="birthss" img="components/com_breedable/assets/images/s_birthss.png" alt="Breedable/Birthss">COM_BREEDABLE_TITLE_BIRTHSS</menu>
+
+        </submenu>
+        <files folder="administrator">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <filename>controller.php</filename>
+            <filename>index.html</filename>
+            <filename>breedable.php</filename>
+            <folder>controllers</folder>
+            <folder>assets</folder>
+            <folder>helpers</folder>
+            <folder>models</folder>
+            <folder>sql</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+            <folder>language</folder>
+        </files>
+        <languages folder="administrator">
+            
+			<language tag="en-GB">language/en-GB/en-GB.com_breedable.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_breedable.sys.ini</language>
+        </languages>
+    </administration>
+    <plugins>
+        <plugin group="search" plugin="breedable"/>
+    </plugins>
+</extension>
+<!-- Component built by the Joomla Component Creator -->
+<!-- http://www.component-creator.com/ -->

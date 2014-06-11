@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+              <field name="id" type="text" default="0" label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="owner_name" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_OWNER_NAME"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_OWNER_NAME" 
+                
+                
+                 required="true" 
+            menu_published="0"
+            filter="string"
+            maxlength="63" /> 
+
+       <field name="owner_key" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_OWNER_KEY"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_OWNER_KEY" 
+                
+                
+                 required="true" 
+            menu_published="0"
+            filter="string"
+            maxlength="36" /> 
+
+       <field name="version" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_VERSION"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_VERSION" 
+        
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="status" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_STATUS"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_STATUS" 
+                
+                
+                 required="true" 
+            menu_published="0"
+            filter="string"
+            maxlength="20" /> 
+
+       <field name="generation" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_GENERATION"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_GENERATION" 
+        
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="mother_id" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_MOTHER_ID"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_MOTHER_ID" 
+         default="0" 
+        
+        
+        filter="safehtml" /> 
+
+       <field name="father_id" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_FATHER_ID"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_FATHER_ID" 
+         default="0" 
+        
+        
+        filter="safehtml" /> 
+
+       <field name="location" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_LOCATION"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_LOCATION" 
+                
+                
+                 required="true" 
+            maxlength="100" /> 
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_CREATED_BY"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_CREATED_BY"  /> 
+
+ </fieldset> 
+
+ <fieldset 
+                        name="accesscontrol">
+                       <field name="asset_id" type="hidden" filter="unset" />
+                       <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_breedable"
+                            section="configuration"
+                        />
+
+	</fieldset>
+
+</form>

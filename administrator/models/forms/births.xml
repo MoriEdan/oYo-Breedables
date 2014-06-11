@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+              <field name="id" type="text" default="0" label="COM_BREEDABLE_FORM_LBL_BIRTHS_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="breed" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_BREED"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_BREED" 
+                
+                
+                 required="true" 
+            menu_published="0"
+            filter="string" /> 
+
+       <field name="coat" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_COAT"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_COAT" 
+                
+                
+                 required="true" 
+            menu_published="0"
+            filter="string" /> 
+
+       <field name="eyes" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_EYES"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_EYES" 
+                
+                
+                 required="true" 
+            menu_published="0"
+            filter="string" /> 
+
+       <field name="bundle" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_BUNDLE"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_BUNDLE" 
+                
+                
+                 required="true" 
+            menu_published="0"
+            filter="string" /> 
+
+       <field name="gender" type="radio"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_GENDER"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_GENDER" 
+                 default="male" 
+                
+                 required="true" 
+            menu_published="0"
+            filter="raw">
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="other">Other</option>
+        </field> 
+
+ 
+		<field name="filter_gender" type="list" onchange="this.form.submit();">
+			<option value="">COM_BREEDABLE_BIRTHSS_GENDER_FILTER</option>
+			<option value="female">Female</option>
+			<option value="male">Male</option>
+			<option value="other">Other</option>
+		</field> 
+
+       <field name="food" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_FOOD"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_FOOD" 
+         default="100" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="health" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_HEALTH"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_HEALTH" 
+         default="100" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="fevor" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_FEVOR"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_FEVOR" 
+         default="100" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="range" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_RANGE"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_RANGE" 
+         default="255" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="sound" type="radio"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_SOUND"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_SOUND" 
+                 default="1" 
+                
+                 required="true" >
+                <option value="1">On</option>
+                <option value="0">Off</option>
+        </field> 
+
+ 
+		<field name="filter_sound" type="list" onchange="this.form.submit();">
+			<option value="">COM_BREEDABLE_BIRTHSS_SOUND_FILTER</option>
+			<option value="1">On</option>
+			<option value="0">Off</option>
+		</field> 
+
+       <field name="walk" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_WALK"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_WALK" 
+         default="255" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="title" type="radio"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_TITLE"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_TITLE" 
+                 default="1" 
+                
+                 required="true" >
+                <option value="0">Off</option>
+                <option value="1">On</option>
+                <option value="2">Compact</option>
+        </field> 
+
+ 
+		<field name="filter_title" type="list" onchange="this.form.submit();">
+			<option value="">COM_BREEDABLE_BIRTHSS_TITLE_FILTER</option>
+			<option value="0">Off</option>
+			<option value="1">On</option>
+			<option value="2">Compact</option>
+		</field> 
+
+       <field name="pregnant" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_PREGNANT"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_PREGNANT" 
+         default="0" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="father_id" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_FATHER_ID"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_FATHER_ID" 
+         default="0" 
+        
+        
+        filter="safehtml" /> 
+
+       <field name="father_name" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_FATHER_NAME"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_FATHER_NAME" 
+                
+                
+                
+            menu_published="0"
+            filter="string" /> 
+
+       <field name="mother_id" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_MOTHER_ID"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_MOTHER_ID" 
+         default="0" 
+        
+        
+        filter="safehtml" /> 
+
+       <field name="mother_name" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_MOTHER_NAME"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_MOTHER_NAME" 
+                
+                
+                
+            menu_published="0"
+            filter="string" /> 
+
+       <field name="mane" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_MANE"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_MANE" 
+                
+                
+                
+            filter="string" /> 
+
+       <field name="mate" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_MATE"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_MATE" 
+         default="1" 
+         validate="boolean" 
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="terrain" type="radio"
+                
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_TERRAIN"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_TERRAIN" 
+                 default="0" 
+                
+                 required="true" >
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+        </field> 
+
+ 
+		<field name="filter_terrain" type="list" onchange="this.form.submit();">
+			<option value="">COM_BREEDABLE_BIRTHSS_TERRAIN_FILTER</option>
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field> 
+
+       <field name="dob" type="calendar" class="inputbox"
+         required="true" 
+        
+         default="0000-00-00" 
+        
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_DOB"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_DOB" 
+        filter="safehtml" /> 
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_BREEDABLE_FORM_LBL_BIRTHS_CREATED_BY"
+            description="COM_BREEDABLE_FORM_DESC_BIRTHS_CREATED_BY"  /> 
+
+ </fieldset> 
+
+ <fieldset 
+                        name="accesscontrol">
+                       <field name="asset_id" type="hidden" filter="unset" />
+                       <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_breedable"
+                            section="births"
+                        />
+
+	</fieldset>
+
+</form>
