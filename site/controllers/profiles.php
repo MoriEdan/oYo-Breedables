@@ -13,15 +13,15 @@ defined('_JEXEC') or die;
 require_once JPATH_COMPONENT.'/controller.php';
 
 /**
- * Configurations list controller class.
+ * Profiles list controller class.
  */
-class BreedableControllerConfigurations extends BreedableController
+class BreedableControllerProfiles extends BreedableController
 {
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function &getModel($name = 'Configurations', $prefix = 'BreedableModel')
+	public function &getModel($name = 'Profiles', $prefix = 'BreedableModel')
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;

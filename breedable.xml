@@ -7,7 +7,7 @@
     <author>Stephen Bishop</author>
     <authorEmail>dazzle.software@gmail.com</authorEmail>
     <authorUrl>http://dazzlesoftware.org</authorUrl>
-    <version>1.0.9</version>
+    <version>1.0.12</version>
     <description>One of the most popular pastimes in Second Life is the caring for, feeding and breeding of virtual animals in Second Life.</description>
     
     <scriptfile>script.php</scriptfile>

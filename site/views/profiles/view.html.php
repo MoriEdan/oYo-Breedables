@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
 /**
  * View class for a list of Breedable.
  */
-class BreedableViewConfigurations extends JViewLegacy
+class BreedableViewProfiles extends JViewLegacy
 {
 	protected $items;
 	protected $pagination;
@@ -30,8 +30,8 @@ class BreedableViewConfigurations extends JViewLegacy
         $app                = JFactory::getApplication();
         
         $this->state		= $this->get('State');
-        $this->items		= $this->get('Items');
-        $this->pagination	= $this->get('Pagination');
+        
+        
         $this->params       = $app->getParams('com_breedable');
         
         // Check for errors.

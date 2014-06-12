@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0.9
+ * @version     1.0.12
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -27,7 +27,7 @@ defined('_JEXEC') or die;
 						$show = true;
 						?>
 							<li>
-								<a href="<?php echo JRoute::_('index.php?option=com_breedable&view=configuration&id=' . (int)$item->id); ?>"><?php echo $item->breedable_id; ?></a>
+								<a href="<?php echo JRoute::_('index.php?option=com_breedable&view=configuration&id=' . (int)$item->id); ?>"><?php echo $item->breedable_name; ?></a>
 							</li>
 
 <?php endforeach; ?>

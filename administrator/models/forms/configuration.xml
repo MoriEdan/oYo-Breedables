@@ -6,6 +6,28 @@
             readonly="true" class="readonly"
             description="JGLOBAL_FIELD_ID_DESC" /> 
 
+       <field name="breedable_type" type="category"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_TYPE"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_TYPE" 
+                
+                
+                 required="true" 
+            extension="com_breedable"
+            menu_published="0"
+            filter="raw" /> 
+
+       <field name="breedable_name" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_NAME"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_NAME" 
+                
+                
+                 required="true" 
+            menu_published="0"
+            filter="string"
+            maxlength="63" /> 
+
        <field name="breedable_id" type="text"
                 
             label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_ID"
@@ -17,16 +39,66 @@
             filter="string"
             maxlength="36" /> 
 
-       <field name="breedable_type" type="category"
+       <field name="owner_name" type="text"
                 
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_TYPE"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_TYPE" 
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_OWNER_NAME"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_OWNER_NAME" 
                 
                 
                  required="true" 
-            extension="com_breedable"
             menu_published="0"
-            filter="raw" /> 
+            filter="string"
+            maxlength="63" /> 
+
+       <field name="owner_key" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_OWNER_KEY"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_OWNER_KEY" 
+                 default="00000000-0000-0000-0000-000000000000" 
+                
+                 required="true" 
+            menu_published="0"
+            filter="string"
+            maxlength="36" /> 
+
+       <field name="status" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_STATUS"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_STATUS" 
+                 default="Bundle" 
+                
+                 required="true" 
+            menu_published="0"
+            filter="string"
+            maxlength="20" /> 
+
+       <field name="version" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_VERSION"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_VERSION" 
+         default="1.0" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="generation" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_GENERATION"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_GENERATION" 
+         default="1" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="breedable_dob" type="calendar" class="inputbox"
+         required="true" 
+        
+         default="0000-00-00 00:00:00" 
+        
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_DOB"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_DOB" 
+        format="%Y-%m-%d %H:%M:%S"
+        filter="safehtml" /> 
 
        <field name="breedable_gender" type="radio"
                 
@@ -41,6 +113,14 @@
                 <option value="male">Male</option>
                 <option value="other">Other</option>
         </field> 
+
+ 
+		<field name="filter_breedable_gender" type="list" onchange="this.form.submit();">
+			<option value="">COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_GENDER_FILTER</option>
+			<option value="female">Female</option>
+			<option value="male">Male</option>
+			<option value="other">Other</option>
+		</field> 
 
        <field name="breedable_coat" type="text"
                 
@@ -86,10 +166,21 @@
         
             label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_FEVOR"
             description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_FEVOR" 
-         default="100" 
+         default="5" 
         
          required="true" 
         filter="safehtml" /> 
+
+       <field name="breedable_walk" type="radio"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_WALK"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_WALK" 
+                 default="1" 
+                
+                 required="true" >
+                <option value="0">Off</option>
+                <option value="1">On</option>
+        </field> 
 
        <field name="breedable_range" type="text" size="40" class="inputbox"
         
@@ -99,6 +190,17 @@
         
          required="true" 
         filter="safehtml" /> 
+
+       <field name="breedable_terrain" type="radio"
+                
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_TERRAIN"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_TERRAIN" 
+                 default="1" 
+                
+                 required="true" >
+                <option value="0">Off</option>
+                <option value="1">On</option>
+        </field> 
 
        <field name="breedable_sound" type="radio"
                 
@@ -111,22 +213,15 @@
                 <option value="1">On</option>
         </field> 
 
-       <field name="breedable_walk" type="text" size="40" class="inputbox"
-        
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_WALK"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_WALK" 
-         default="255" 
-        
-         required="true" 
-        filter="safehtml" /> 
-
        <field name="breedable_title" type="radio"
                 
             label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_TITLE"
             description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_TITLE" 
                  default="1" 
                 
-                 required="true" >
+                 required="true" 
+            menu_published="0"
+            filter="raw">
                 <option value="0">Off</option>
                 <option value="1">On</option>
                 <option value="2">Compact</option>
@@ -147,7 +242,9 @@
             description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_MANE" 
                  default="B1" 
                 
-                 required="true" >
+                 required="true" 
+            menu_published="0"
+            filter="raw">
                 <option value="B1">Normal</option>
                 <option value="B2">Long</option>
         </field> 
@@ -165,39 +262,6 @@
                 <option value="1">On</option>
         </field> 
 
-       <field name="breedable_terrain" type="radio"
-                
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_TERRAIN"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_TERRAIN" 
-                 default="1" 
-                
-                 required="true" >
-                <option value="0">Off</option>
-                <option value="1">On</option>
-        </field> 
-
-       <field name="owner_name" type="text"
-                
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_OWNER_NAME"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_OWNER_NAME" 
-                
-                
-                 required="true" 
-            menu_published="0"
-            filter="string"
-            maxlength="63" /> 
-
-       <field name="owner_key" type="text"
-                
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_OWNER_KEY"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_OWNER_KEY" 
-                 default="00000000-0000-0000-0000-000000000000" 
-                
-                 required="true" 
-            menu_published="0"
-            filter="string"
-            maxlength="36" /> 
-
        <field name="bundle_key" type="text"
                 
             label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BUNDLE_KEY"
@@ -206,44 +270,6 @@
                 
                  required="true" 
             maxlength="36" /> 
-
-       <field name="version" type="text" size="40" class="inputbox"
-        
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_VERSION"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_VERSION" 
-         default="1.0" 
-        
-         required="true" 
-        filter="safehtml" /> 
-
-       <field name="status" type="text"
-                
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_STATUS"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_STATUS" 
-                 default="bundle" 
-                
-                 required="true" 
-            menu_published="0"
-            filter="string"
-            maxlength="20" /> 
-
-       <field name="generation" type="text" size="40" class="inputbox"
-        
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_GENERATION"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_GENERATION" 
-         default="1" 
-        
-         required="true" 
-        filter="safehtml" /> 
-
-       <field name="mother_id" type="text" size="40" class="inputbox"
-        
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_MOTHER_ID"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_MOTHER_ID" 
-         default="0" 
-        
-        
-        filter="safehtml" /> 
 
        <field name="mother_name" type="text"
                 
@@ -256,10 +282,10 @@
             filter="string"
             maxlength="63" /> 
 
-       <field name="father_id" type="text" size="40" class="inputbox"
+       <field name="mother_id" type="text" size="40" class="inputbox"
         
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_FATHER_ID"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_FATHER_ID" 
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_MOTHER_ID"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_MOTHER_ID" 
          default="0" 
         
         
@@ -275,6 +301,15 @@
             filter="string"
             maxlength="63" /> 
 
+       <field name="father_id" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_FATHER_ID"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_FATHER_ID" 
+         default="0" 
+        
+        
+        filter="safehtml" /> 
+
        <field name="location" type="text"
                 
             label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_LOCATION"
@@ -285,16 +320,6 @@
             menu_published="0"
             filter="string"
             maxlength="100" /> 
-
-       <field name="dob" type="calendar" class="inputbox"
-         required="true" 
-        
-         default="0000-00-00 00:00:00" 
-        
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_DOB"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_DOB" 
-        format="%Y-%m-%d %H:%M:%S"
-        filter="safehtml" /> 
 
        <field name="created_by" type="createdby" default="" 
             label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_CREATED_BY"

@@ -13,9 +13,9 @@ defined('_JEXEC') or die;
 require_once JPATH_COMPONENT . '/controller.php';
 
 /**
- * Configuration controller class.
+ * Profile controller class.
  */
-class BreedableControllerConfiguration extends BreedableController {
+class BreedableControllerProfile extends BreedableController {
 
     /**
      * Method to check out an item for editing and redirect to the edit form.
@@ -26,14 +26,14 @@ class BreedableControllerConfiguration extends BreedableController {
         $app = JFactory::getApplication();
 
         // Get the previous edit id (if any) and the current edit id.
-        $previousId = (int) $app->getUserState('com_breedable.edit.configuration.id');
+        $previousId = (int) $app->getUserState('com_breedable.edit.profile.id');
         $editId = JFactory::getApplication()->input->getInt('id', null, 'array');
 
         // Set the user id for the user to edit in the session.
-        $app->setUserState('com_breedable.edit.configuration.id', $editId);
+        $app->setUserState('com_breedable.edit.profile.id', $editId);
 
         // Get the model.
-        $model = $this->getModel('Configuration', 'BreedableModel');
+        $model = $this->getModel('Profile', 'BreedableModel');
 
         // Check out the item
         if ($editId) {
@@ -46,7 +46,7 @@ class BreedableControllerConfiguration extends BreedableController {
         }
 
         // Redirect to the edit screen.
-        $this->setRedirect(JRoute::_('index.php?option=com_breedable&view=configurationform&layout=edit', false));
+        $this->setRedirect(JRoute::_('index.php?option=com_breedable&view=profileform&layout=edit', false));
     }
 
     /**
@@ -61,7 +61,7 @@ class BreedableControllerConfiguration extends BreedableController {
 
         // Initialise variables.
         $app = JFactory::getApplication();
-        $model = $this->getModel('Configuration', 'BreedableModel');
+        $model = $this->getModel('Profile', 'BreedableModel');
 
         // Get the user data.
         $data = JFactory::getApplication()->input->get('jform', array(), 'array');
@@ -86,10 +86,10 @@ class BreedableControllerConfiguration extends BreedableController {
         }
 
         // Clear the profile id from the session.
-        $app->setUserState('com_breedable.edit.configuration.id', null);
+        $app->setUserState('com_breedable.edit.profile.id', null);
 
         // Flush the data from the session.
-        $app->setUserState('com_breedable.edit.configuration.data', null);
+        $app->setUserState('com_breedable.edit.profile.data', null);
 
         // Redirect to the list screen.
         $this->setMessage(JText::_('COM_BREEDABLE_ITEM_SAVED_SUCCESSFULLY'));
@@ -104,7 +104,7 @@ class BreedableControllerConfiguration extends BreedableController {
 
         // Initialise variables.
         $app = JFactory::getApplication();
-        $model = $this->getModel('Configuration', 'BreedableModel');
+        $model = $this->getModel('Profile', 'BreedableModel');
 
         // Get the user data.
         $data = JFactory::getApplication()->input->get('jform', array(), 'array');
@@ -122,10 +122,10 @@ class BreedableControllerConfiguration extends BreedableController {
             }
 
             // Clear the profile id from the session.
-            $app->setUserState('com_breedable.edit.configuration.id', null);
+            $app->setUserState('com_breedable.edit.profile.id', null);
 
             // Flush the data from the session.
-            $app->setUserState('com_breedable.edit.configuration.data', null);
+            $app->setUserState('com_breedable.edit.profile.data', null);
             
             $this->setMessage(JText::_('COM_BREEDABLE_ITEM_DELETED_SUCCESSFULLY'));
         }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version     1.0.9
+ * @version     1.0.12
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -27,34 +27,35 @@ class BreedableModelConfigurations extends JModelList {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                                 'id', 'a.id',
-                'breedable_id', 'a.breedable_id',
                 'breedable_type', 'a.breedable_type',
+                'breedable_name', 'a.breedable_name',
+                'breedable_id', 'a.breedable_id',
+                'owner_name', 'a.owner_name',
+                'owner_key', 'a.owner_key',
+                'status', 'a.status',
+                'version', 'a.version',
+                'generation', 'a.generation',
+                'breedable_dob', 'a.breedable_dob',
                 'breedable_gender', 'a.breedable_gender',
                 'breedable_coat', 'a.breedable_coat',
                 'breedable_eyes', 'a.breedable_eyes',
                 'breedable_food', 'a.breedable_food',
                 'breedable_health', 'a.breedable_health',
                 'breedable_fevor', 'a.breedable_fevor',
-                'breedable_range', 'a.breedable_range',
-                'breedable_sound', 'a.breedable_sound',
                 'breedable_walk', 'a.breedable_walk',
+                'breedable_range', 'a.breedable_range',
+                'breedable_terrain', 'a.breedable_terrain',
+                'breedable_sound', 'a.breedable_sound',
                 'breedable_title', 'a.breedable_title',
                 'breedable_pregnant', 'a.breedable_pregnant',
                 'breedable_mane', 'a.breedable_mane',
                 'breedable_mate', 'a.breedable_mate',
-                'breedable_terrain', 'a.breedable_terrain',
-                'owner_name', 'a.owner_name',
-                'owner_key', 'a.owner_key',
                 'bundle_key', 'a.bundle_key',
-                'version', 'a.version',
-                'status', 'a.status',
-                'generation', 'a.generation',
-                'mother_id', 'a.mother_id',
                 'mother_name', 'a.mother_name',
-                'father_id', 'a.father_id',
+                'mother_id', 'a.mother_id',
                 'father_name', 'a.father_name',
+                'father_id', 'a.father_id',
                 'location', 'a.location',
-                'dob', 'a.dob',
                 'ordering', 'a.ordering',
                 'created_by', 'a.created_by',
 
@@ -81,6 +82,30 @@ class BreedableModelConfigurations extends JModelList {
         $this->setState('filter.state', $published);
 
         
+		//Filtering owner_name
+		$this->setState('filter.owner_name', $app->getUserStateFromRequest($this->context.'.filter.owner_name', 'filter_owner_name', '', 'string'));
+
+		//Filtering status
+		$this->setState('filter.status', $app->getUserStateFromRequest($this->context.'.filter.status', 'filter_status', '', 'string'));
+
+		//Filtering version
+		$this->setState('filter.version', $app->getUserStateFromRequest($this->context.'.filter.version', 'filter_version', '', 'string'));
+
+		//Filtering generation
+		$this->setState('filter.generation', $app->getUserStateFromRequest($this->context.'.filter.generation', 'filter_generation', '', 'string'));
+
+		//Filtering breedable_gender
+		$this->setState('filter.breedable_gender', $app->getUserStateFromRequest($this->context.'.filter.breedable_gender', 'filter_breedable_gender', '', 'string'));
+
+		//Filtering breedable_eyes
+		$this->setState('filter.breedable_eyes', $app->getUserStateFromRequest($this->context.'.filter.breedable_eyes', 'filter_breedable_eyes', '', 'string'));
+
+		//Filtering breedable_fevor
+		$this->setState('filter.breedable_fevor', $app->getUserStateFromRequest($this->context.'.filter.breedable_fevor', 'filter_breedable_fevor', '', 'string'));
+
+		//Filtering breedable_pregnant
+		$this->setState('filter.breedable_pregnant', $app->getUserStateFromRequest($this->context.'.filter.breedable_pregnant', 'filter_breedable_pregnant', '', 'string'));
+
 
         // Load the parameters.
         $params = JComponentHelper::getParams('com_breedable');
@@ -153,6 +178,26 @@ class BreedableModelConfigurations extends JModelList {
         }
 
         
+
+		//Filtering owner_name
+
+		//Filtering status
+
+		//Filtering version
+
+		//Filtering generation
+
+		//Filtering breedable_gender
+		$filter_breedable_gender = $this->state->get("filter.breedable_gender");
+		if ($filter_breedable_gender != '') {
+			$query->where("a.breedable_gender = '".$db->escape($filter_breedable_gender)."'");
+		}
+
+		//Filtering breedable_eyes
+
+		//Filtering breedable_fevor
+
+		//Filtering breedable_pregnant
 
 
         // Add the list ordering clause.

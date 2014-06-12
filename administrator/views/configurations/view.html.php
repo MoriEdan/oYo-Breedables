@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0.9
+ * @version     1.0.12
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -111,6 +111,24 @@ class BreedableViewConfigurations extends JViewLegacy
         
         $this->extra_sidebar = '';
         
+		//Filter for the field breedable_gender
+		$select_label = JText::sprintf('COM_BREEDABLE_FILTER_SELECT_LABEL', 'Gender');
+		$options = array();
+		$options[0] = new stdClass();
+		$options[0]->value = "female";
+		$options[0]->text = "Female";
+		$options[1] = new stdClass();
+		$options[1]->value = "male";
+		$options[1]->text = "Male";
+		$options[2] = new stdClass();
+		$options[2]->value = "other";
+		$options[2]->text = "Other";
+		JHtmlSidebar::addFilter(
+			$select_label,
+			'filter_breedable_gender',
+			JHtml::_('select.options', $options , "value", "text", $this->state->get('filter.breedable_gender'), true)
+		);
+
         
 	}
     
@@ -118,6 +136,24 @@ class BreedableViewConfigurations extends JViewLegacy
 	{
 		return array(
 		'a.id' => JText::_('JGRID_HEADING_ID'),
+		'a.breedable_type' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_TYPE'),
+		'a.breedable_name' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_NAME'),
+		'a.breedable_id' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_ID'),
+		'a.owner_name' => JText::_('COM_BREEDABLE_CONFIGURATIONS_OWNER_NAME'),
+		'a.status' => JText::_('COM_BREEDABLE_CONFIGURATIONS_STATUS'),
+		'a.version' => JText::_('COM_BREEDABLE_CONFIGURATIONS_VERSION'),
+		'a.generation' => JText::_('COM_BREEDABLE_CONFIGURATIONS_GENERATION'),
+		'a.breedable_dob' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_DOB'),
+		'a.breedable_gender' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_GENDER'),
+		'a.breedable_coat' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_COAT'),
+		'a.breedable_eyes' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_EYES'),
+		'a.breedable_food' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_FOOD'),
+		'a.breedable_health' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_HEALTH'),
+		'a.breedable_fevor' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_FEVOR'),
+		'a.breedable_title' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_TITLE'),
+		'a.breedable_pregnant' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_PREGNANT'),
+		'a.breedable_mane' => JText::_('COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_MANE'),
+		'a.location' => JText::_('COM_BREEDABLE_CONFIGURATIONS_LOCATION'),
 		'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
 		'a.checked_out' => JText::_('COM_BREEDABLE_CONFIGURATIONS_CHECKED_OUT'),
 		'a.checked_out_time' => JText::_('COM_BREEDABLE_CONFIGURATIONS_CHECKED_OUT_TIME'),

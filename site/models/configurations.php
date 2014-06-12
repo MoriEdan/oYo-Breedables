@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version     1.0.9
+ * @version     1.0.12
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -101,6 +101,26 @@ class BreedableModelConfigurations extends JModelList {
         }
 
         
+
+		//Filtering owner_name
+
+		//Filtering status
+
+		//Filtering version
+
+		//Filtering generation
+
+		//Filtering breedable_gender
+		$filter_breedable_gender = $this->state->get("filter.breedable_gender");
+		if ($filter_breedable_gender) {
+			$query->where("a.breedable_gender = '".$filter_breedable_gender."'");
+		}
+
+		//Filtering breedable_eyes
+
+		//Filtering breedable_fevor
+
+		//Filtering breedable_pregnant
         
         // Add the list ordering clause.
         $orderCol = $this->state->get('list.ordering');

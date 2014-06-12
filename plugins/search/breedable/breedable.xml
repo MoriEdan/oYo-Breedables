@@ -7,7 +7,7 @@
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorEmail>dazzle.software@gmail.com</authorEmail>
     <authorUrl>http://dazzlesoftware.org</authorUrl>
-    <version>1.0.9</version>
+    <version>1.0.12</version>
     <description>PLG_SEARCH_COM_BREEDABLE_XML_DESCRIPTION</description>
     <files>
         <filename plugin="breedable">breedable.php</filename>

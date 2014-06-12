@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     1.0.12
  * @package     com_breedable
@@ -6,42 +7,54 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
-
 // No direct access
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
 /**
- * View class for a list of Breedable.
+ * View to edit
  */
-class BreedableViewConfigurations extends JViewLegacy
-{
-	protected $items;
-	protected $pagination;
-	protected $state;
+class BreedableViewProfile extends JViewLegacy {
+
+    protected $state;
+    protected $item;
+    protected $form;
     protected $params;
 
-	/**
-	 * Display the view
-	 */
-	public function display($tpl = null)
-	{
-        $app                = JFactory::getApplication();
+    /**
+     * Display the view
+     */
+    public function display($tpl = null) {
         
-        $this->state		= $this->get('State');
-        $this->items		= $this->get('Items');
-        $this->pagination	= $this->get('Pagination');
-        $this->params       = $app->getParams('com_breedable');
+		$app	= JFactory::getApplication();
+        $user		= JFactory::getUser();
         
+        $this->state = $this->get('State');
+        
+        $this->params = $app->getParams('com_breedable');
+   		
+
         // Check for errors.
-        if (count($errors = $this->get('Errors'))) {;
+        if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));
         }
         
+        
+        
+        if($this->_layout == 'edit') {
+            
+            $authorised = $user->authorise('core.create', 'com_breedable');
+
+            if ($authorised !== true) {
+                throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'));
+            }
+        }
+        
         $this->_prepareDocument();
+
         parent::display($tpl);
-	}
+    }
 
 
 	/**
@@ -88,6 +101,6 @@ class BreedableViewConfigurations extends JViewLegacy
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}
-	}    
-    	
+	}        
+    
 }

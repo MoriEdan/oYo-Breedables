@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0.9
+ * @version     1.0.12
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -111,6 +111,60 @@ if (!empty($this->extra_sidebar)) {
                 <?php endif; ?>
                     
 				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_TYPE', 'a.breedable_type', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_NAME', 'a.breedable_name', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_ID', 'a.breedable_id', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_OWNER_NAME', 'a.owner_name', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_STATUS', 'a.status', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_VERSION', 'a.version', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_GENERATION', 'a.generation', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_DOB', 'a.breedable_dob', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_GENDER', 'a.breedable_gender', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_COAT', 'a.breedable_coat', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_EYES', 'a.breedable_eyes', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_FOOD', 'a.breedable_food', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_HEALTH', 'a.breedable_health', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_FEVOR', 'a.breedable_fevor', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_TITLE', 'a.breedable_title', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_PREGNANT', 'a.breedable_pregnant', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_MANE', 'a.breedable_mane', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_LOCATION', 'a.location', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
 				</th>
                     
@@ -176,6 +230,85 @@ if (!empty($this->extra_sidebar)) {
 					</td>
                 <?php endif; ?>
                     
+				<td>
+
+					<?php echo $item->breedable_type; ?>
+				</td>
+				<td>
+				<?php if (isset($item->checked_out) && $item->checked_out) : ?>
+					<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'configurations.', $canCheckin); ?>
+				<?php endif; ?>
+				<?php if ($canEdit) : ?>
+					<a href="<?php echo JRoute::_('index.php?option=com_breedable&task=configuration.edit&id='.(int) $item->id); ?>">
+					<?php echo $this->escape($item->breedable_name); ?></a>
+				<?php else : ?>
+					<?php echo $this->escape($item->breedable_name); ?>
+				<?php endif; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_id; ?>
+				</td>
+				<td>
+
+					<?php echo $item->owner_name; ?>
+				</td>
+				<td>
+
+					<?php echo $item->status; ?>
+				</td>
+				<td>
+
+					<?php echo $item->version; ?>
+				</td>
+				<td>
+
+					<?php echo $item->generation; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_dob; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_gender; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_coat; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_eyes; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_food; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_health; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_fevor; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_title; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_pregnant; ?>
+				</td>
+				<td>
+
+					<?php echo $item->breedable_mane; ?>
+				</td>
+				<td>
+
+					<?php echo $item->location; ?>
+				</td>
 				<td>
 
 					<?php echo $item->created_by; ?>

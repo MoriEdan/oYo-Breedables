@@ -16,7 +16,7 @@ jimport('joomla.event.dispatcher');
 /**
  * Breedable model.
  */
-class BreedableModelConfiguration extends JModelItem {
+class BreedableModelProfile extends JModelItem {
 
     /**
      * Method to auto-populate the model state.
@@ -30,18 +30,18 @@ class BreedableModelConfiguration extends JModelItem {
 
         // Load state from the request userState on edit or from the passed variable on default
         if (JFactory::getApplication()->input->get('layout') == 'edit') {
-            $id = JFactory::getApplication()->getUserState('com_breedable.edit.configuration.id');
+            $id = JFactory::getApplication()->getUserState('com_breedable.edit.profile.id');
         } else {
             $id = JFactory::getApplication()->input->get('id');
-            JFactory::getApplication()->setUserState('com_breedable.edit.configuration.id', $id);
+            JFactory::getApplication()->setUserState('com_breedable.edit.profile.id', $id);
         }
-        $this->setState('configuration.id', $id);
+        $this->setState('profile.id', $id);
 
         // Load the parameters.
         $params = $app->getParams();
         $params_array = $params->toArray();
         if (isset($params_array['item_id'])) {
-            $this->setState('configuration.id', $params_array['item_id']);
+            $this->setState('profile.id', $params_array['item_id']);
         }
         $this->setState('params', $params);
     }
@@ -58,7 +58,7 @@ class BreedableModelConfiguration extends JModelItem {
             $this->_item = false;
 
             if (empty($id)) {
-                $id = $this->getState('configuration.id');
+                $id = $this->getState('profile.id');
             }
 
             // Get a level row instance.
@@ -89,7 +89,7 @@ class BreedableModelConfiguration extends JModelItem {
         return $this->_item;
     }
 
-    public function getTable($type = 'Configuration', $prefix = 'BreedableTable', $config = array()) {
+    public function getTable($type = 'Profile', $prefix = 'BreedableTable', $config = array()) {
         $this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
         return JTable::getInstance($type, $prefix, $config);
     }
@@ -103,7 +103,7 @@ class BreedableModelConfiguration extends JModelItem {
      */
     public function checkin($id = null) {
         // Get the id.
-        $id = (!empty($id)) ? $id : (int) $this->getState('configuration.id');
+        $id = (!empty($id)) ? $id : (int) $this->getState('profile.id');
 
         if ($id) {
 
@@ -131,7 +131,7 @@ class BreedableModelConfiguration extends JModelItem {
      */
     public function checkout($id = null) {
         // Get the user id.
-        $id = (!empty($id)) ? $id : (int) $this->getState('configuration.id');
+        $id = (!empty($id)) ? $id : (int) $this->getState('profile.id');
 
         if ($id) {
 

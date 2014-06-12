@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0.9
+ * @version     1.0.12
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -58,12 +58,40 @@ $document->addStyleSheet('components/com_breedable/assets/css/breedable.css');
 				<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
 			</div>
 			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('breedable_type'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('breedable_type'); ?></div>
+			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('breedable_name'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('breedable_name'); ?></div>
+			</div>
+			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('breedable_id'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('breedable_id'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('breedable_type'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('breedable_type'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('owner_name'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('owner_name'); ?></div>
+			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('owner_key'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('owner_key'); ?></div>
+			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('status'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('status'); ?></div>
+			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('version'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('version'); ?></div>
+			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('generation'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('generation'); ?></div>
+			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('breedable_dob'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('breedable_dob'); ?></div>
 			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('breedable_gender'); ?></div>
@@ -90,16 +118,20 @@ $document->addStyleSheet('components/com_breedable/assets/css/breedable.css');
 				<div class="controls"><?php echo $this->form->getInput('breedable_fevor'); ?></div>
 			</div>
 			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('breedable_walk'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('breedable_walk'); ?></div>
+			</div>
+			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('breedable_range'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('breedable_range'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('breedable_sound'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('breedable_sound'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('breedable_terrain'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('breedable_terrain'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('breedable_walk'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('breedable_walk'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('breedable_sound'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('breedable_sound'); ?></div>
 			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('breedable_title'); ?></div>
@@ -118,56 +150,28 @@ $document->addStyleSheet('components/com_breedable/assets/css/breedable.css');
 				<div class="controls"><?php echo $this->form->getInput('breedable_mate'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('breedable_terrain'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('breedable_terrain'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('owner_name'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('owner_name'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('owner_key'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('owner_key'); ?></div>
-			</div>
-			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('bundle_key'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('bundle_key'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('version'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('version'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('status'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('status'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('generation'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('generation'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('mother_id'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('mother_id'); ?></div>
 			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('mother_name'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('mother_name'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('father_id'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('father_id'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('mother_id'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('mother_id'); ?></div>
 			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('father_name'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('father_name'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('location'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('location'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('father_id'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('father_id'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('dob'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('dob'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('location'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('location'); ?></div>
 			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
