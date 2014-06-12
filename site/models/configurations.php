@@ -106,8 +106,6 @@ class BreedableModelConfigurations extends JModelList {
 
 		//Filtering status
 
-		//Filtering version
-
 		//Filtering generation
 
 		//Filtering breedable_gender

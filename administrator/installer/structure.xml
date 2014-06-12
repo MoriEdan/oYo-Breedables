@@ -8,9 +8,9 @@
     <field action="add" field_name="owner_name" field_type="VARCHAR" field_length="255" description=""/>
     <field action="change" field_name="owner_key" field_type="VARCHAR" field_length="255" description=""/>
     <field action="change" field_name="status" field_type="VARCHAR" field_length="255" index="index" description=""/>
-    <field action="add" field_name="version" field_type="DECIMAL" description=""/>
+    <field action="change" field_name="version" field_type="FLOAT" description=""/>
     <field action="add" field_name="generation" field_type="INT" field_length="11" description=""/>
-    <field action="change" old_name="dob" new_name="breedable_dob" field_name="breedable_dob" field_type="DATETIME" description=""/>
+    <field action="change" field_name="breedable_dob" field_type="DATETIME" description=""/>
     <field action="add" field_name="breedable_gender" field_type="VARCHAR" field_length="255" description="Male, Female, or other"/>
     <field action="change" old_name="breedable_skin" new_name="breedable_coat" field_name="breedable_coat" field_type="VARCHAR" field_length="255" description=""/>
     <field action="change" field_name="breedable_eyes" field_type="VARCHAR" field_length="255" description=""/>

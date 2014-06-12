@@ -88,9 +88,6 @@ class BreedableModelConfigurations extends JModelList {
 		//Filtering status
 		$this->setState('filter.status', $app->getUserStateFromRequest($this->context.'.filter.status', 'filter_status', '', 'string'));
 
-		//Filtering version
-		$this->setState('filter.version', $app->getUserStateFromRequest($this->context.'.filter.version', 'filter_version', '', 'string'));
-
 		//Filtering generation
 		$this->setState('filter.generation', $app->getUserStateFromRequest($this->context.'.filter.generation', 'filter_generation', '', 'string'));
 
@@ -182,8 +179,6 @@ class BreedableModelConfigurations extends JModelList {
 		//Filtering owner_name
 
 		//Filtering status
-
-		//Filtering version
 
 		//Filtering generation
 
