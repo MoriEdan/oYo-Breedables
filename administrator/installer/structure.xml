@@ -1,74 +1,38 @@
 <?xml version="1.0"?>
 <component>
-  <table action="add" table_name="#__breedable_configuration" storage_engine="" collation="utf8_general_ci">
-    <field action="change" field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
+  <table action="add" table_name="#__breedable" storage_engine="" collation="utf8_general_ci">
+    <field field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
+    <field action="change" old_name="breed_id" new_name="breedable_id" field_name="breedable_id" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="change" old_name="breed_type" new_name="breedable_type" field_name="breedable_type" field_type="INT" field_length="11" description=""/>
+    <field action="add" field_name="breedable_gender" field_type="VARCHAR" field_length="255" description="Male, Female, or other"/>
+    <field action="change" old_name="breedable_skin" new_name="breedable_coat" field_name="breedable_coat" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="change" field_name="breedable_eyes" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="add" field_name="breedable_food" field_type="INT" field_length="3" description=""/>
+    <field action="change" old_name="breedable_food_copy_1" new_name="breedable_health" field_name="breedable_health" field_type="INT" field_length="3" description=""/>
+    <field action="change" old_name="breedable_food_copy_1" new_name="breedable_fevor" field_name="breedable_fevor" field_type="INT" field_length="3" description=""/>
+    <field action="change" old_name="breedable_fevor_copy_1" new_name="breedable_range" field_name="breedable_range" field_type="INT" field_length="3" description=""/>
+    <field action="add" field_name="breedable_sound" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="change" old_name="breedable_range_copy_1" new_name="breedable_walk" field_name="breedable_walk" field_type="INT" field_length="3" description=""/>
+    <field action="add" field_name="breedable_title" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="add" field_name="breedable_pregnant" field_type="INT" field_length="3" description=""/>
+    <field action="add" field_name="breedable_mane" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="add" field_name="breedable_mate" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="add" field_name="breedable_terrain" field_type="VARCHAR" field_length="255" description=""/>
     <field action="add" field_name="owner_name" field_type="VARCHAR" field_length="255" description=""/>
-    <field action="add" field_name="owner_key" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="change" field_name="owner_key" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="add" field_name="bundle_key" field_type="VARCHAR" field_length="255" description=""/>
     <field action="add" field_name="version" field_type="DECIMAL" description=""/>
-    <field action="add" field_name="status" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="change" field_name="status" field_type="VARCHAR" field_length="255" index="index" description=""/>
     <field action="add" field_name="generation" field_type="INT" field_length="11" description=""/>
     <field action="add" field_name="mother_id" field_type="INT" field_length="11" description=""/>
+    <field action="change" old_name="father_name_copy_1" new_name="mother_name" field_name="mother_name" field_type="VARCHAR" field_length="255" description=""/>
     <field action="add" field_name="father_id" field_type="INT" field_length="11" description=""/>
-    <field action="add" field_name="location" field_type="VARCHAR" field_length="255" description=""/>
-    <field field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
-    <field action="remove" field_name=""/>
-    <field action="remove" field_name=""/>
-    <field action="remove" field_name=""/>
-    <field action="remove" field_name=""/>
-    <field action="remove" field_name=""/>
-  </table>
-  <table action="add" table_name="#__breedable_bundle" storage_engine="" collation="utf8_general_ci">
-    <field field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
-    <field action="change" old_name="bundle_breed" new_name="breed" field_name="breed" field_type="VARCHAR" field_length="255" description="(Type of breed oYo Horse,oYo Cat etc)"/>
-    <field action="change" old_name="bundle_coat" new_name="coat" field_name="coat" field_type="VARCHAR" field_length="255" description="(Breed Skin)"/>
-    <field action="change" old_name="bundle_eyes" new_name="eyes" field_name="eyes" field_type="VARCHAR" field_length="255" description="(Breed Eye type)"/>
-    <field action="add" field_name="bundle" field_type="VARCHAR" field_length="255" description=""/>
-    <field action="add" field_name="gender" field_type="VARCHAR" field_length="255" description=""/>
-    <field action="change" field_name="food" field_type="INT" field_length="3" description=""/>
-    <field action="change" field_name="health" field_type="INT" field_length="3" description=""/>
-    <field action="change" field_name="fevor" field_type="INT" field_length="3" description=""/>
-    <field action="add" field_name="range" field_type="INT" field_length="3" description=""/>
-    <field action="add" field_name="sound" field_type="VARCHAR" field_length="255" description=""/>
-    <field action="add" field_name="walk" field_type="INT" field_length="3" description=""/>
-    <field action="add" field_name="title" field_type="VARCHAR" field_length="255" description=""/>
-    <field action="add" field_name="pregnant" field_type="INT" field_length="11" description="0 or mating time as integer"/>
-    <field action="change" field_name="father_id" field_type="INT" field_length="11" description=""/>
     <field action="add" field_name="father_name" field_type="VARCHAR" field_length="255" description=""/>
-    <field action="change" field_name="mother_id" field_type="INT" field_length="11" description=""/>
-    <field action="add" field_name="mother_name" field_type="VARCHAR" field_length="255" description=""/>
-    <field action="add" field_name="mane" field_type="VARCHAR" field_length="255" description=""/>
-    <field action="add" field_name="mate" field_type="BOOLEAN" description=""/>
-    <field action="add" field_name="terrain" field_type="VARCHAR" field_length="255" description="Walk on terrain"/>
-    <field field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
-    <field action="remove" field_name=""/>
-    <field action="remove" field_name=""/>
-    <field action="remove" field_name=""/>
-    <field action="remove" field_name=""/>
-    <field action="remove" field_name=""/>
-  </table>
-  <table action="change" old_name="#__breedable_bundle_copy_1" new_name="#__breedable_bundle_birth" table_name="#__breedable_bundle_birth" storage_engine="" collation="utf8_general_ci">
-    <field field_name="id" field_type="INT" field_length="11" is_autoincrement="1" index="primary" description=""/>
-    <field field_name="breed" field_type="VARCHAR" field_length="255" description="(Type of breed oYo Horse,oYo Cat etc)"/>
-    <field field_name="coat" field_type="VARCHAR" field_length="255" description="(Breed Skin)"/>
-    <field field_name="eyes" field_type="VARCHAR" field_length="255" description="(Breed Eye type)"/>
-    <field field_name="bundle" field_type="VARCHAR" field_length="255" description=""/>
-    <field field_name="gender" field_type="VARCHAR" field_length="255" description=""/>
-    <field field_name="food" field_type="INT" field_length="3" description=""/>
-    <field field_name="health" field_type="INT" field_length="3" description=""/>
-    <field field_name="fevor" field_type="INT" field_length="3" description=""/>
-    <field field_name="range" field_type="INT" field_length="3" description=""/>
-    <field field_name="sound" field_type="VARCHAR" field_length="255" description=""/>
-    <field field_name="walk" field_type="INT" field_length="3" description=""/>
-    <field field_name="title" field_type="VARCHAR" field_length="255" description=""/>
-    <field field_name="pregnant" field_type="INT" field_length="11" description="0 or mating time as integer"/>
-    <field field_name="father_id" field_type="INT" field_length="11" description=""/>
-    <field field_name="father_name" field_type="VARCHAR" field_length="255" description=""/>
-    <field field_name="mother_id" field_type="INT" field_length="11" description=""/>
-    <field field_name="mother_name" field_type="VARCHAR" field_length="255" description=""/>
-    <field field_name="mane" field_type="VARCHAR" field_length="255" description=""/>
-    <field field_name="mate" field_type="BOOLEAN" description=""/>
-    <field field_name="terrain" field_type="VARCHAR" field_length="255" description="Walk on terrain"/>
-    <field action="add" field_name="dob" field_type="DATE" description=""/>
+    <field action="add" field_name="location" field_type="VARCHAR" field_length="255" description=""/>
+    <field action="change" old_name="birthdate" new_name="dob" field_name="dob" field_type="DATETIME" description=""/>
+    <field field_name="ordering" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="checked_out" field_type="INT" field_length="11" index="index" description=""/>
+    <field field_name="checked_out_time" field_type="DATETIME" description=""/>
     <field field_name="created_by" field_type="INT" field_length="11" index="index" description=""/>
   </table>
 </component>

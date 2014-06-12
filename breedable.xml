@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
     <name>com_breedable</name>
-    <creationDate>2014-06-10</creationDate>
+    <creationDate>2014-06-11</creationDate>
     <copyright>Copyright (C) 2014. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <author>Stephen Bishop</author>
-    <authorEmail>support@dazzlesoftware.org</authorEmail>
+    <authorEmail>dazzle.software@gmail.com</authorEmail>
     <authorUrl>http://dazzlesoftware.org</authorUrl>
-    <version>1.0.2</version>
-    <description>Second Life Breedables</description>
+    <version>1.0.9</version>
+    <description>One of the most popular pastimes in Second Life is the caring for, feeding and breeding of virtual animals in Second Life.</description>
     
     <scriptfile>script.php</scriptfile>
     
@@ -43,9 +43,7 @@
             
 			<menu link="option=com_breedable&amp;view=configurations" view="configurations" img="components/com_breedable/assets/images/s_configurations.png" alt="Breedable/Configurations">COM_BREEDABLE_TITLE_CONFIGURATIONS</menu>
 
-			<menu link="option=com_breedable&amp;view=bundles" view="bundles" img="components/com_breedable/assets/images/s_bundles.png" alt="Breedable/Bundles">COM_BREEDABLE_TITLE_BUNDLES</menu>
-
-			<menu link="option=com_breedable&amp;view=birthss" view="birthss" img="components/com_breedable/assets/images/s_birthss.png" alt="Breedable/Birthss">COM_BREEDABLE_TITLE_BIRTHSS</menu>
+			<menu link="option=com_categories&amp;extension=com_breedable" view="categories" img="components/com_breedable/assets/images/s_configurations.png" alt="Breedable/Categories">COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_TYPE</menu>
 
         </submenu>
         <files folder="administrator">

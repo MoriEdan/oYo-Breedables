@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @version     1.0.2
+ * @version     1.0.9
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Stephen Bishop <support@dazzlesoftware.org> - http://dazzlesoftware.org
+ * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
 // No direct access
 defined('_JEXEC') or die;
@@ -25,15 +25,13 @@ class BreedableBackendHelper {
 			$vName == 'configurations'
 		);
 		JHtmlSidebar::addEntry(
-			JText::_('COM_BREEDABLE_TITLE_BUNDLES'),
-			'index.php?option=com_breedable&view=bundles',
-			$vName == 'bundles'
+			'Categories (Configurations)',
+			"index.php?option=com_categories&extension=com_breedable",
+			$vName == 'categories'
 		);
-		JHtmlSidebar::addEntry(
-			JText::_('COM_BREEDABLE_TITLE_BIRTHSS'),
-			'index.php?option=com_breedable&view=birthss',
-			$vName == 'birthss'
-		);
+		if ($vName=='categories') {
+			JToolBarHelper::title('Breedable For Second Life: Categories (Configurations)');
+		}
 
     }
 

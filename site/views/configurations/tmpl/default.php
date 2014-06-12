@@ -1,10 +1,10 @@
 <?php
 /**
- * @version     1.0.2
+ * @version     1.0.9
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Stephen Bishop <support@dazzlesoftware.org> - http://dazzlesoftware.org
+ * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
 // no direct access
 defined('_JEXEC') or die;
@@ -27,7 +27,7 @@ defined('_JEXEC') or die;
 						$show = true;
 						?>
 							<li>
-								<a href="<?php echo JRoute::_('index.php?option=com_breedable&view=configuration&id=' . (int)$item->id); ?>"><?php echo $item->owner_name; ?></a>
+								<a href="<?php echo JRoute::_('index.php?option=com_breedable&view=configuration&id=' . (int)$item->id); ?>"><?php echo $item->breedable_id; ?></a>
 							</li>
 
 <?php endforeach; ?>

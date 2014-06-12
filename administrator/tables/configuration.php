@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @version     1.0.2
+ * @version     1.0.9
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Stephen Bishop <support@dazzlesoftware.org> - http://dazzlesoftware.org
+ * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
 // No direct access
 defined('_JEXEC') or die;
@@ -21,7 +21,7 @@ class BreedableTableconfiguration extends JTable {
      * @param JDatabase A database connector object
      */
     public function __construct(&$db) {
-        parent::__construct('#__breedable_configuration', 'id', $db);
+        parent::__construct('#__breedable', 'id', $db);
     }
 
     /**

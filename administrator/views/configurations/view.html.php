@@ -1,10 +1,10 @@
 <?php
 /**
- * @version     1.0.2
+ * @version     1.0.9
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Stephen Bishop <support@dazzlesoftware.org> - http://dazzlesoftware.org
+ * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
 
 // No direct access
@@ -118,14 +118,9 @@ class BreedableViewConfigurations extends JViewLegacy
 	{
 		return array(
 		'a.id' => JText::_('JGRID_HEADING_ID'),
-		'a.owner_name' => JText::_('COM_BREEDABLE_CONFIGURATIONS_OWNER_NAME'),
-		'a.owner_key' => JText::_('COM_BREEDABLE_CONFIGURATIONS_OWNER_KEY'),
-		'a.version' => JText::_('COM_BREEDABLE_CONFIGURATIONS_VERSION'),
-		'a.status' => JText::_('COM_BREEDABLE_CONFIGURATIONS_STATUS'),
-		'a.generation' => JText::_('COM_BREEDABLE_CONFIGURATIONS_GENERATION'),
-		'a.mother_id' => JText::_('COM_BREEDABLE_CONFIGURATIONS_MOTHER_ID'),
-		'a.father_id' => JText::_('COM_BREEDABLE_CONFIGURATIONS_FATHER_ID'),
-		'a.location' => JText::_('COM_BREEDABLE_CONFIGURATIONS_LOCATION'),
+		'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
+		'a.checked_out' => JText::_('COM_BREEDABLE_CONFIGURATIONS_CHECKED_OUT'),
+		'a.checked_out_time' => JText::_('COM_BREEDABLE_CONFIGURATIONS_CHECKED_OUT_TIME'),
 		'a.created_by' => JText::_('COM_BREEDABLE_CONFIGURATIONS_CREATED_BY'),
 		);
 	}

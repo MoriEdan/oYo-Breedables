@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @version     1.0.2
+ * @version     1.0.9
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Stephen Bishop <support@dazzlesoftware.org> - http://dazzlesoftware.org
+ * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
 defined('_JEXEC') or die;
 
@@ -47,6 +47,10 @@ class BreedableModelConfigurations extends JModelList {
         $this->setState('list.start', $limitstart);
 
         
+		if(empty($ordering)) {
+			$ordering = 'a.ordering';
+			$direction = 'ASC';
+		}
 
         // List state information.
         parent::populateState($ordering, $direction);
@@ -70,9 +74,16 @@ class BreedableModelConfigurations extends JModelList {
                 )
         );
 
-        $query->from('`#__breedable_configuration` AS a');
+        $query->from('`#__breedable` AS a');
 
         
+    // Join over the users for the checked out user.
+    $query->select('uc.name AS editor');
+    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+    
+		// Join over the category 'breedable_type'
+		$query->select('breedable_type.title AS breedable_type_title');
+		$query->join('LEFT', '#__categories AS breedable_type ON breedable_type.id = a.breedable_type');
 		// Join over the created by field 'created_by'
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
@@ -85,23 +96,11 @@ class BreedableModelConfigurations extends JModelList {
                 $query->where('a.id = ' . (int) substr($search, 3));
             } else {
                 $search = $db->Quote('%' . $db->escape($search, true) . '%');
-                $query->where('( a.owner_name LIKE '.$search.'  OR  a.owner_key LIKE '.$search.'  OR  a.status LIKE '.$search.'  OR  a.location LIKE '.$search.' )');
+                
             }
         }
 
         
-
-		//Filtering id
-
-		//Filtering owner_name
-
-		//Filtering generation
-
-		//Filtering mother_id
-
-		//Filtering father_id
-
-		//Filtering location
         
         // Add the list ordering clause.
         $orderCol = $this->state->get('list.ordering');

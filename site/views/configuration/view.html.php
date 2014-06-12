@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @version     1.0.2
+ * @version     1.0.9
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Stephen Bishop <support@dazzlesoftware.org> - http://dazzlesoftware.org
+ * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
 // No direct access
 defined('_JEXEC') or die;
@@ -34,6 +34,7 @@ class BreedableViewConfiguration extends JViewLegacy {
         $this->item = $this->get('Data');
         $this->params = $app->getParams('com_breedable');
    		
+		$this->item->breedable_type_title = $this->getModel()->getCategoryName($this->item->breedable_type)->title;
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {

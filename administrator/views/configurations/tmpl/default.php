@@ -1,10 +1,10 @@
 <?php
 /**
- * @version     1.0.2
+ * @version     1.0.9
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Stephen Bishop <support@dazzlesoftware.org> - http://dazzlesoftware.org
+ * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
 
 // no direct access
@@ -111,30 +111,6 @@ if (!empty($this->extra_sidebar)) {
                 <?php endif; ?>
                     
 				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_OWNER_NAME', 'a.owner_name', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_OWNER_KEY', 'a.owner_key', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_VERSION', 'a.version', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_STATUS', 'a.status', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_GENERATION', 'a.generation', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_MOTHER_ID', 'a.mother_id', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_FATHER_ID', 'a.father_id', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_LOCATION', 'a.location', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
 				</th>
                     
@@ -200,45 +176,6 @@ if (!empty($this->extra_sidebar)) {
 					</td>
                 <?php endif; ?>
                     
-				<td>
-				<?php if (isset($item->checked_out) && $item->checked_out) : ?>
-					<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'configurations.', $canCheckin); ?>
-				<?php endif; ?>
-				<?php if ($canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_breedable&task=configuration.edit&id='.(int) $item->id); ?>">
-					<?php echo $this->escape($item->owner_name); ?></a>
-				<?php else : ?>
-					<?php echo $this->escape($item->owner_name); ?>
-				<?php endif; ?>
-				</td>
-				<td>
-
-					<?php echo $item->owner_key; ?>
-				</td>
-				<td>
-
-					<?php echo $item->version; ?>
-				</td>
-				<td>
-
-					<?php echo $item->status; ?>
-				</td>
-				<td>
-
-					<?php echo $item->generation; ?>
-				</td>
-				<td>
-
-					<?php echo $item->mother_id; ?>
-				</td>
-				<td>
-
-					<?php echo $item->father_id; ?>
-				</td>
-				<td>
-
-					<?php echo $item->location; ?>
-				</td>
 				<td>
 
 					<?php echo $item->created_by; ?>

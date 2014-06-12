@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @version     1.0.2
+ * @version     1.0.9
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Stephen Bishop <support@dazzlesoftware.org> - http://dazzlesoftware.org
+ * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
 defined('_JEXEC') or die;
 
@@ -27,14 +27,35 @@ class BreedableModelConfigurations extends JModelList {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                                 'id', 'a.id',
+                'breedable_id', 'a.breedable_id',
+                'breedable_type', 'a.breedable_type',
+                'breedable_gender', 'a.breedable_gender',
+                'breedable_coat', 'a.breedable_coat',
+                'breedable_eyes', 'a.breedable_eyes',
+                'breedable_food', 'a.breedable_food',
+                'breedable_health', 'a.breedable_health',
+                'breedable_fevor', 'a.breedable_fevor',
+                'breedable_range', 'a.breedable_range',
+                'breedable_sound', 'a.breedable_sound',
+                'breedable_walk', 'a.breedable_walk',
+                'breedable_title', 'a.breedable_title',
+                'breedable_pregnant', 'a.breedable_pregnant',
+                'breedable_mane', 'a.breedable_mane',
+                'breedable_mate', 'a.breedable_mate',
+                'breedable_terrain', 'a.breedable_terrain',
                 'owner_name', 'a.owner_name',
                 'owner_key', 'a.owner_key',
+                'bundle_key', 'a.bundle_key',
                 'version', 'a.version',
                 'status', 'a.status',
                 'generation', 'a.generation',
                 'mother_id', 'a.mother_id',
+                'mother_name', 'a.mother_name',
                 'father_id', 'a.father_id',
+                'father_name', 'a.father_name',
                 'location', 'a.location',
+                'dob', 'a.dob',
+                'ordering', 'a.ordering',
                 'created_by', 'a.created_by',
 
             );
@@ -60,31 +81,13 @@ class BreedableModelConfigurations extends JModelList {
         $this->setState('filter.state', $published);
 
         
-		//Filtering id
-		$this->setState('filter.id', $app->getUserStateFromRequest($this->context.'.filter.id', 'filter_id', '', 'string'));
-
-		//Filtering owner_name
-		$this->setState('filter.owner_name', $app->getUserStateFromRequest($this->context.'.filter.owner_name', 'filter_owner_name', '', 'string'));
-
-		//Filtering generation
-		$this->setState('filter.generation', $app->getUserStateFromRequest($this->context.'.filter.generation', 'filter_generation', '', 'string'));
-
-		//Filtering mother_id
-		$this->setState('filter.mother_id', $app->getUserStateFromRequest($this->context.'.filter.mother_id', 'filter_mother_id', '', 'string'));
-
-		//Filtering father_id
-		$this->setState('filter.father_id', $app->getUserStateFromRequest($this->context.'.filter.father_id', 'filter_father_id', '', 'string'));
-
-		//Filtering location
-		$this->setState('filter.location', $app->getUserStateFromRequest($this->context.'.filter.location', 'filter_location', '', 'string'));
-
 
         // Load the parameters.
         $params = JComponentHelper::getParams('com_breedable');
         $this->setState('params', $params);
 
         // List state information.
-        parent::populateState('a.owner_name', 'asc');
+        parent::populateState('a.id', 'asc');
     }
 
     /**
@@ -123,9 +126,15 @@ class BreedableModelConfigurations extends JModelList {
                         'list.select', 'a.*'
                 )
         );
-        $query->from('`#__breedable_configuration` AS a');
+        $query->from('`#__breedable` AS a');
 
         
+		// Join over the users for the checked out user
+		$query->select("uc.name AS editor");
+		$query->join("LEFT", "#__users AS uc ON uc.id=a.checked_out");
+		// Join over the category 'breedable_type'
+		$query->select('breedable_type.title AS breedable_type');
+		$query->join('LEFT', '#__categories AS breedable_type ON breedable_type.id = a.breedable_type');
 		// Join over the user field 'created_by'
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
@@ -139,23 +148,11 @@ class BreedableModelConfigurations extends JModelList {
                 $query->where('a.id = ' . (int) substr($search, 3));
             } else {
                 $search = $db->Quote('%' . $db->escape($search, true) . '%');
-                $query->where('( a.owner_name LIKE '.$search.'  OR  a.owner_key LIKE '.$search.'  OR  a.version LIKE '.$search.'  OR  a.status LIKE '.$search.'  OR  a.generation LIKE '.$search.'  OR  a.location LIKE '.$search.' )');
+                
             }
         }
 
         
-
-		//Filtering id
-
-		//Filtering owner_name
-
-		//Filtering generation
-
-		//Filtering mother_id
-
-		//Filtering father_id
-
-		//Filtering location
 
 
         // Add the list ordering clause.

@@ -1,10 +1,10 @@
 <?php
 /**
- * @version     1.0.2
+ * @version     1.0.9
  * @package     com_breedable
  * @copyright   Copyright (C) 2014. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Stephen Bishop <support@dazzlesoftware.org> - http://dazzlesoftware.org
+ * @author      Stephen Bishop <dazzle.software@gmail.com> - http://dazzlesoftware.org
  */
 
 // No direct access.
@@ -114,7 +114,7 @@ class BreedableModelConfiguration extends JModelAdmin
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
 				$db = JFactory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__breedable_configuration');
+				$db->setQuery('SELECT MAX(ordering) FROM #__breedable');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
 			}
