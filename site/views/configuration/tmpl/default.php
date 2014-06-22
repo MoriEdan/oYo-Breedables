@@ -20,14 +20,14 @@ $lang->load('com_breedable', JPATH_ADMINISTRATOR);
 
         <ul class="fields_list">
 
-            			<li><?php echo JText::_('COM_BREEDABLE_FORM_LBL_CONFIGURATION_ID'); ?>:
+            <li><?php echo JText::_('COM_BREEDABLE_FORM_LBL_CONFIGURATION_ID'); ?>:
 			<?php echo $this->item->id; ?></li>
 			<li><?php echo JText::_('COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_TYPE'); ?>:
 			<?php echo $this->item->breedable_type_title; ?></li>
 			<li><?php echo JText::_('COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_NAME'); ?>:
 			<?php echo $this->item->breedable_name; ?></li>
-			<li><?php echo JText::_('COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_ID'); ?>:
-			<?php echo $this->item->breedable_id; ?></li>
+			<li><?php echo JText::_('COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_KEY'); ?>:
+			<?php echo $this->item->breedable_key; ?></li>
 			<li><?php echo JText::_('COM_BREEDABLE_FORM_LBL_CONFIGURATION_OWNER_NAME'); ?>:
 			<?php echo $this->item->owner_name; ?></li>
 			<li><?php echo JText::_('COM_BREEDABLE_FORM_LBL_CONFIGURATION_OWNER_KEY'); ?>:

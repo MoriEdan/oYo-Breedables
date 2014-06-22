@@ -53,7 +53,7 @@ class BreedableViewConfiguration extends JViewLegacy
         } else {
             $checkedOut = false;
         }
-		$canDo		= BreedableBackendHelper::getActions();
+		$canDo		= BreedableHelper::getActions();
 
 		JToolBarHelper::title(JText::_('COM_BREEDABLE_TITLE_CONFIGURATION'), 'configuration.png');
 

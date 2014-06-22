@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 /**
  * Breedable helper.
  */
-class BreedableBackendHelper {
-
+class BreedableHelper
+{
     /**
      * Configure the Linkbar.
      */
@@ -25,14 +25,13 @@ class BreedableBackendHelper {
 			$vName == 'configurations'
 		);
 		JHtmlSidebar::addEntry(
-			'Categories (Configurations)',
+			'Breedable (Types)',
 			"index.php?option=com_categories&extension=com_breedable",
 			$vName == 'categories'
 		);
 		if ($vName=='categories') {
-			JToolBarHelper::title('Breedable For Second Life: Categories (Configurations)');
+			JToolBarHelper::title('Breedable For Second Life: Breedable (Types)');
 		}
-
     }
 
     /**

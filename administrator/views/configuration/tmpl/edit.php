@@ -66,8 +66,8 @@ $document->addStyleSheet('components/com_breedable/assets/css/breedable.css');
 				<div class="controls"><?php echo $this->form->getInput('breedable_name'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('breedable_id'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('breedable_id'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('breedable_key'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('breedable_key'); ?></div>
 			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('owner_name'); ?></div>

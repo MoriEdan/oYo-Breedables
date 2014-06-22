@@ -117,7 +117,7 @@ if (!empty($this->extra_sidebar)) {
 				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_NAME', 'a.breedable_name', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_ID', 'a.breedable_id', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_KEY', 'a.breedable_key', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BREEDABLE_CONFIGURATIONS_OWNER_NAME', 'a.owner_name', $listDirn, $listOrder); ?>
@@ -247,7 +247,7 @@ if (!empty($this->extra_sidebar)) {
 				</td>
 				<td>
 
-					<?php echo $item->breedable_id; ?>
+					<?php echo $item->breedable_key; ?>
 				</td>
 				<td>
 

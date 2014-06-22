@@ -28,10 +28,10 @@
             filter="string"
             maxlength="63" /> 
 
-       <field name="breedable_id" type="text"
+       <field name="breedable_key" type="text"
                 
-            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_ID"
-            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_ID" 
+            label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_KEY"
+            description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_KEY" 
                  default="00000000-0000-0000-0000-000000000000" 
                 
                  required="true" 
@@ -115,13 +115,14 @@
         </field> 
 
  
+		<!--
 		<field name="filter_breedable_gender" type="list" onchange="this.form.submit();">
 			<option value="">COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_GENDER_FILTER</option>
 			<option value="female">Female</option>
 			<option value="male">Male</option>
 			<option value="other">Other</option>
 		</field> 
-
+		-->
        <field name="breedable_coat" type="text"
                 
             label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_COAT"
