@@ -16,25 +16,6 @@ jimport('joomla.event.dispatcher');
 /**
  * Breedable model.
  */
-/*
-a.breedable_type as type, a.breedable_name as name, a.breedable_key as id,
-a.owner_name as name, a.owner_key as owner_key
-
-a.status as status
-a.version as version
-a.generation as generation
-a.breedable_dob as dob
-a.breedable_gender as gender
-a.breedable_coat as coat
-a.breedable_eyes as eyes
-a.breedable_food as food, a.breedable_health as health
-a.breedable_fevor as fevor, a.breedable_walk as walk, a.breedable_range as range, a.breedable_terrain as terrain
-a.breedable_sound as sound, a.breedable_title as title
-a.breedable_pregnant as pregnant, a.breedable_mane as mane, a.breedable_mate as mate
-a.bundle_key as bundle_key
-a.mother_name as mother_name, a.mother_id as mother_id, a.father_name as father_name, a.father_id as father_id
-a.location as location
-*/
 class BreedableModelConfiguration extends JModelItem
 {
 /*
@@ -61,10 +42,11 @@ class BreedableModelConfiguration extends JModelItem
 */
 	public function configure( $data = null ) {
 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
+
+		$query1 = $db->getQuery(true);
 
 		// Select the required fields from the table.
-		$query->select('a.id as configure_id')
+		$query1->select('a.id as configure_id')
 			->select('a.breedable_type as breedable_type')         // 0
 			->select('a.breedable_name as breedable_name')         // 1
 			->select('a.breedable_key as breedable_key')           // 2
@@ -97,21 +79,67 @@ class BreedableModelConfiguration extends JModelItem
 			->from($db->quoteName('#__breedable') . ' AS a');
 
 		// Join with the category
-		$query->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=a.breedable_type')
+		$query1->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=a.breedable_type')
 			->select('cat.title as category_title');
 
-		$query->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']))
+		$query1->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']))
 			->where($db->quoteName('a.owner_name') . '=' . $db->quote($data['owner_name']))
 			->where($db->quoteName('a.owner_key') . '=' . $db->quote($data['owner_key']))
 			->where($db->quoteName('a.status') . '=' . $db->quote($data['previous_status']));
-		$db->setQuery($query);
+		$db->setQuery($query1);
 		$configure = $db->loadAssoc();
 
 		$query2 = $db->getQuery(true);
 
+		// Select the required fields from the table.
+		$query2->select('f.breedable_coat')
+			->select('f.breedable_eyes')
+			->select('f.breedable_mane')
+			->from($db->quoteName('#__breedable') . ' AS f');
+
+		$query2->where($db->quoteName('f.breedable_name') . '=' . $db->quote($configure['father_name']))
+			->where($db->quoteName('f.id') . '=' . $db->quote($configure['father_id']));
+		$db->setQuery($query2);
+		$father = $db->loadAssoc();
+
+		$query3 = $db->getQuery(true);
+		
+		$query3->select('m.breedable_coat')
+			->select('m.breedable_eyes')
+			->select('m.breedable_mane')
+			->from($db->quoteName('#__breedable') . ' AS m');
+
+		$query3->where($db->quoteName('m.breedable_name') . '=' . $db->quote($configure['mother_name']))
+			->where($db->quoteName('m.id') . '=' . $db->quote($configure['mother_id']));
+		$db->setQuery($query3);
+		$mother = $db->loadAssoc();
+
+		$input_coat = array(
+			$mother['breedable_coat'],
+			$father['breedable_coat']
+		);
+		$rand_coat = array_rand($input_coat);
+		
+		$input_eyes = array(
+			$mother['breedable_eyes'],
+			$father['breedable_eyes']
+		);
+		$rand_eyes = array_rand($input_eyes);
+
+		$input_mane = array(
+			$mother['breedable_mane'],
+			$father['breedable_mane']
+		);
+		$rand_mane = array_rand($input_mane);
+
+		$query4 = $db->getQuery(true);
+
 		// Fields to update.
 		$fields = array(
-			$db->quoteName('status') . ' = ' . $db->quote($data['current_status'])
+			$db->quoteName('status') . ' = ' . $db->quote($data['current_status']),
+			$db->quoteName('breedable_coat') . ' = ' . $db->quote($input_coat[$rand_coat]),
+			$db->quoteName('breedable_eyes') . ' = ' . $db->quote($input_eyes[$rand_eyes]),
+			$db->quoteName('breedable_mane') . ' = ' . $db->quote($input_mane[$rand_mane])
 		);
 
 		// Conditions for which records should be updated.
@@ -119,13 +147,11 @@ class BreedableModelConfiguration extends JModelItem
 			$db->quoteName('id') . ' = ' . $db->quote($configure['configure_id'])
 		);
 
-		$query2->update($db->quoteName('#__breedable'))->set($fields)->where($conditions);
+		$query4->update($db->quoteName('#__breedable'))->set($fields)->where($conditions);
 
-		$db->setQuery($query2);
+		$db->setQuery($query4);
 
 		$result = $db->query();
-
-		//echo print_r($configure, true);
 
 		$output  = $configure['category_title'] . "-";
 		$output .= $configure['breedable_coat'] . "-";
@@ -486,7 +512,8 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 		$query1->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=a.breedable_type')
 			->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']))
 			->where($db->quoteName('a.owner_name') . '=' . $db->quote($data['owner_name']))
-			->where($db->quoteName('a.owner_key') . '=' . $db->quote($data['owner_key']));
+			->where($db->quoteName('a.owner_key') . '=' . $db->quote($data['owner_key']))
+			->where($db->quoteName('a.status') . '=' . $db->quote($data['previous_status']));
 		
 		$db->setQuery($query1);
 		$delivery = $db->loadAssoc();
@@ -497,7 +524,7 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 
 		// Fields to update.
 		$fields = array(
-			$db->quoteName('status') . ' = ' . $db->quote($data['status'])
+			$db->quoteName('status') . ' = ' . $db->quote($data['current_status'])
 		);
 
 		// Conditions for which records should be updated.
