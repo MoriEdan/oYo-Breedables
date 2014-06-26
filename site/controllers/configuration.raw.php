@@ -17,6 +17,47 @@ require_once JPATH_COMPONENT . '/controller.php';
  */
 class BreedableControllerConfiguration extends BreedableController
 {
+	public function Update() {
+		// Set the data
+		$data = array(
+			'breedable_dob' => $this->input->getString('breedable_dob'),
+			'breedable_gender' => $this->input->getString('breedable_gender'),
+			'breedable_coat' => $this->input->getString('breedable_coat'),
+			'breedable_eyes' => $this->input->getString('breedable_eyes'),
+			'breedable_food' => $this->input->getInt('breedable_food'),
+			'breedable_health' => $this->input->getInt('breedable_health'),
+			'breedable_fevor' => $this->input->getInt('breedable_fevor'),
+			'breedable_walk' => $this->input->getInt('breedable_walk'),
+			'breedable_range' => $this->input->getInt('breedable_range'),
+			'breedable_terrain' => $this->input->getInt('breedable_terrain'),
+			'breedable_sound' => $this->input->getInt('breedable_sound'),
+			'breedable_title' => $this->input->getInt('breedable_title'),
+			'breedable_pregnant' => $this->input->getInt('breedable_pregnant'),
+			'breedable_mane' => $this->input->getString('breedable_mane'),
+			'breedable_mate' => $this->input->getInt('breedable_mate'),
+			'breedable_name' => $this->input->getString('breedable_name'),
+			'breedable_key' => $this->input->getString('breedable_key'),
+			'generation' => $this->input->getInt('generation'),
+			'owner_name' => $this->input->getString('owner_name'),
+			'owner_key' => $this->input->getString('owner_key'),
+			'location' => $this->input->getString('location'),
+			'mode' => $this->input->getString('mode'),
+			'status' => $this->input->getString('status'),
+			'version' => $this->input->getFloat('version')
+		);
+
+        // Get the model.
+        $model = $this->getModel('Configuration', 'BreedableModel');
+
+        // Check out the item
+        if ($data) {
+            $model->Update($data);
+        }
+		else
+		{
+			$this->setMessage(JText::sprintf('Save failed', $model->getError()), 'warning');
+		}
+	}
 	public function configure() {
 		// Set the data
 		$data = array(
@@ -168,7 +209,9 @@ http://hellzfire.cu.cc/index.php?option=com_breedable&view=configuration&task=co
 			'mother_id'      => $this->input->getInt('mother_id'),
 			'mother_config'    => $this->input->getString('mother_config'),
 			'generation'     => $this->input->getInt('generation'),
-			'status'     => $this->input->getString('status')
+			'grandfather_status'     => $this->input->getString('grandfather_status'),
+			'previous_status'     => $this->input->getString('previous_status'),
+			'current_status'     => $this->input->getString('current_status')
 		);
 
         // Get the model.

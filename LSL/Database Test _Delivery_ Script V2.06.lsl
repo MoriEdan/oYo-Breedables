@@ -1,6 +1,6 @@
 //start_unprocessed_text
 /*/|/ ----------------------------------------------------------------------------------
-/|/ Database Test "Info" Script V1.00
+/|/ Database Test "Delivery" Script V1.00
 /|/ ----------------------------------------------------------------------------------
 /|/ Copyright (c) 2014, Jenni Eales. All rights reserved.
 /|/ ----------------------------------------------------------------------------------
@@ -13,8 +13,14 @@
 /|/ constants
 integer DEBUG           = TRUE;
 string HTTP_HOSTNAME     = "http:/|/oyobreedables.com/";
-string HTTP_INFO_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.Information";
+string HTTP_DELIVERY_PHP = "index.php?option=com_breedable&view=configuration&task=configuration.delivery";
 
+string TXT_BREED         = "oYo Horses";
+
+/|/string status = "B";
+/|/ status
+string previous_status = "C";
+string current_status = "Born";
 /|/ internal use
 key http_request_id = NULL_KEY;
 
@@ -23,32 +29,35 @@ log(string message)
     if (DEBUG) llOwnerSay(message);
 }
 
-get_info(integer id)
+check_delivery()
 {
-    string url = HTTP_HOSTNAME + HTTP_INFO_PHP; 
-    url += "&id=" + (string) id;
-
-    /|/ output raw
-    url += "&format="  + llEscapeURL("raw");
+    string url = HTTP_HOSTNAME + HTTP_DELIVERY_PHP;
+    url += "&breedable_type="         + llEscapeURL(TXT_BREED);
+    url += "&owner_name="             + llEscapeURL(llKey2Name(llGetOwner()));
+    url += "&owner_key="              + (string) llGetOwner();
+    url += "&previous_status="     + llEscapeURL(previous_status);
+    url += "&current_status="     + llEscapeURL(current_status);
+    /|/url += "&status="              + llEscapeURL(status);
     
+    /|/ output raw
+    url += "&format="     + llEscapeURL("raw");
+ 
     log("request: " + url + " (" + (string) llStringLength(url) + " char)");
 
     /|/ send request
-    http_request_id = llHTTPRequest(url, [HTTP_METHOD, "POST"], "");
+    http_request_id = llHTTPRequest(url, [HTTP_METHOD, "GET"], "");
 }
 
 display_result(string body)
 {
-    body = (string)llParseString2List(body, ["<br />"], []);
     llSay(0, body);
-    
 }
 
 default
 {
     touch_start(integer total_number)
     {
-        get_info(3);
+        check_delivery();
     }
 
     /|/ answer of http response
@@ -105,9 +114,12 @@ default
 //mono
 
 
+string previous_status = "C";
 key http_request_id = NULL_KEY;
-string HTTP_INFO_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.Information";
+string current_status = "Born";
+string TXT_BREED         = "oYo Horses";
 string HTTP_HOSTNAME     = "http://oyobreedables.com/";
+string HTTP_DELIVERY_PHP = "index.php?option=com_breedable&view=configuration&task=configuration.delivery";
 integer DEBUG           = TRUE;
 
 
@@ -117,26 +129,29 @@ log(string message)
 }
 
 
-get_info(integer id)
+display_result(string body)
 {
-    string url = HTTP_HOSTNAME + HTTP_INFO_PHP; 
-    url += "&id=" + (string) id;
-
-    
-    url += "&format="  + llEscapeURL("raw");
-    
-    log("request: " + url + " (" + (string) llStringLength(url) + " char)");
-
-    
-    http_request_id = llHTTPRequest(url, [HTTP_METHOD, "POST"], "");
+    llSay(0, body);
 }
 
 
-display_result(string body)
+check_delivery()
 {
-    body = (string)llParseString2List(body, ["<br />"], []);
-    llSay(0, body);
+    string url = HTTP_HOSTNAME + HTTP_DELIVERY_PHP;
+    url += "&breedable_type="         + llEscapeURL(TXT_BREED);
+    url += "&owner_name="             + llEscapeURL(llKey2Name(llGetOwner()));
+    url += "&owner_key="              + (string) llGetOwner();
+    url += "&previous_status="     + llEscapeURL(previous_status);
+    url += "&current_status="     + llEscapeURL(current_status);
     
+    
+    
+    url += "&format="     + llEscapeURL("raw");
+ 
+    log("request: " + url + " (" + (string) llStringLength(url) + " char)");
+
+    
+    http_request_id = llHTTPRequest(url, [HTTP_METHOD, "GET"], "");
 }
 
 
@@ -144,7 +159,7 @@ default
 {
     touch_start(integer total_number)
     {
-        get_info(3);
+        check_delivery();
     }
 
     

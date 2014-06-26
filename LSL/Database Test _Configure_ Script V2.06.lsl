@@ -1,6 +1,6 @@
 //start_unprocessed_text
 /*/|/ ----------------------------------------------------------------------------------
-/|/ Database Test "Birth" Script V1.00
+/|/ Database Test "Configure" Script V1.00
 /|/ ----------------------------------------------------------------------------------
 /|/ Copyright (c) 2014, Jenni Eales. All rights reserved.
 /|/ ----------------------------------------------------------------------------------
@@ -13,66 +13,35 @@
 /|/ constants
 integer DEBUG           = TRUE;
 string HTTP_HOSTNAME     = "http:/|/oyobreedables.com/";
-string HTTP_BIRTH_PHP   = "index.php?option=com_breedable&view=configuration&task=configuration.birth";
+string HTTP_CONFIG_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.configure";
 
 string TXT_BREED         = "oYo Horses";
 
-/|/ test data
-string fath_name         = "Romeo";
-string fath_config         = "oyo-BlackWalker-Amber-1401528763-M-100-100-0-10-1-1-1-0-Grandfather-Grandmother-B1-0-0-0-0";
-
-string moth_name         = "Giulia";
-string moth_config         = "oyo-WhiteArab-Crimson-1401528763-F-100-100-0-10-1-1-1-0-Grandfather-Grandmother-B2-0-0-2-0";
-
-/|/ status
-string status = "A";
-
 /|/ internal use
 key http_request_id = NULL_KEY;
+
+/|/ status
+string previous_status = "Born";
+string current_status = "C";
 
 log(string message)
 {
     if (DEBUG) llOwnerSay(message);
 }
 
-integer get_generation(string line)
+retrieve_configuration()
 {
-    list tokens = llParseString2List(line, ["-"], []);
-    if (TXT_BREED == llList2String(tokens, 0))
-        return llList2Integer(tokens, 18);
-    else
-        return 0;
-}
-
-integer get_id(string line)
-{
-    list tokens = llParseString2List(line, ["-"], []);
-    if (TXT_BREED == llList2String(tokens, 0))
-        return llList2Integer(tokens, 19);
-    else
-        return 0;
-}
-
-send_birth()
-{
-    string url = HTTP_HOSTNAME + HTTP_BIRTH_PHP; 
-    url += "&owner_name="             + llEscapeURL(llKey2Name(llGetOwner()));
-    url += "&owner_key="              + (string) llGetOwner();
-    url += "&breedable_type="         + llEscapeURL(TXT_BREED);
-    url += "&breedable_name="         + llGetObjectName();
-    url += "&father_name="     + llEscapeURL(fath_name);
-    url += "&father_id="         + (string) get_id(fath_config);
-    url += "&father_config="     + llEscapeURL(fath_config);
-    url += "&mother_name="     + llEscapeURL(moth_name);
-    url += "&mother_id="         + (string) get_id(moth_config);
-    url += "&mother_config="     + llEscapeURL(moth_config);
-    url += "&generation="   + (string) (get_generation(moth_config) + 1);
-    url += "&status="     + llEscapeURL(status);
+    string url = HTTP_HOSTNAME + HTTP_CONFIG_PHP; 
+    url += "&owner_name="         + llEscapeURL(llKey2Name(llGetOwner()));
+    url += "&owner_key="          + (string) llGetOwner();
+    url += "&breedable_type="     + llEscapeURL(TXT_BREED);
     
-    
+    url += "&previous_status="     + llEscapeURL(previous_status);
+    url += "&current_status="     + llEscapeURL(current_status);
+    /|/url += "&status="     + llEscapeURL(status);
     
     /|/ output raw
-    url += "&format="     + llEscapeURL("raw");
+    url += "&format="             + llEscapeURL("raw");
     
     log("request: " + url + " (" + (string) llStringLength(url) + " char)");
 
@@ -89,7 +58,7 @@ default
 {
     touch_start(integer total_number)
     {
-        send_birth();
+        retrieve_configuration();
     }
 
     /|/ answer of http response
@@ -146,58 +115,28 @@ default
 //mono
 
 
-string status = "A";
-string moth_name         = "Giulia";
-string moth_config         = "oyo-WhiteArab-Crimson-1401528763-F-100-100-0-10-1-1-1-0-Grandfather-Grandmother-B2-0-0-2-0";
+string previous_status = "Born";
 key http_request_id = NULL_KEY;
-string fath_name         = "Romeo";
-string fath_config         = "oyo-BlackWalker-Amber-1401528763-M-100-100-0-10-1-1-1-0-Grandfather-Grandmother-B1-0-0-0-0";
+string current_status = "C";
 string TXT_BREED         = "oYo Horses";
 string HTTP_HOSTNAME     = "http://oyobreedables.com/";
-string HTTP_BIRTH_PHP   = "index.php?option=com_breedable&view=configuration&task=configuration.birth";
+string HTTP_CONFIG_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.configure";
 integer DEBUG           = TRUE;
-integer get_id(string line)
+
+
+retrieve_configuration()
 {
-    list tokens = llParseString2List(line, ["-"], []);
-    if (TXT_BREED == llList2String(tokens, 0))
-        return llList2Integer(tokens, 19);
-    else
-        return 0;
-}
-integer get_generation(string line)
-{
-    list tokens = llParseString2List(line, ["-"], []);
-    if (TXT_BREED == llList2String(tokens, 0))
-        return llList2Integer(tokens, 18);
-    else
-        return 0;
-}
-
-
-
-
-
-
-send_birth()
-{
-    string url = HTTP_HOSTNAME + HTTP_BIRTH_PHP; 
-    url += "&owner_name="             + llEscapeURL(llKey2Name(llGetOwner()));
-    url += "&owner_key="              + (string) llGetOwner();
-    url += "&breedable_type="         + llEscapeURL(TXT_BREED);
-    url += "&breedable_name="         + llGetObjectName();
-    url += "&father_name="     + llEscapeURL(fath_name);
-    url += "&father_id="         + (string) get_id(fath_config);
-    url += "&father_config="     + llEscapeURL(fath_config);
-    url += "&mother_name="     + llEscapeURL(moth_name);
-    url += "&mother_id="         + (string) get_id(moth_config);
-    url += "&mother_config="     + llEscapeURL(moth_config);
-    url += "&generation="   + (string) (get_generation(moth_config) + 1);
-    url += "&status="     + llEscapeURL(status);
+    string url = HTTP_HOSTNAME + HTTP_CONFIG_PHP; 
+    url += "&owner_name="         + llEscapeURL(llKey2Name(llGetOwner()));
+    url += "&owner_key="          + (string) llGetOwner();
+    url += "&breedable_type="     + llEscapeURL(TXT_BREED);
+    
+    url += "&previous_status="     + llEscapeURL(previous_status);
+    url += "&current_status="     + llEscapeURL(current_status);
     
     
     
-    
-    url += "&format="     + llEscapeURL("raw");
+    url += "&format="             + llEscapeURL("raw");
     
     log("request: " + url + " (" + (string) llStringLength(url) + " char)");
 
@@ -222,7 +161,7 @@ default
 {
     touch_start(integer total_number)
     {
-        send_birth();
+        retrieve_configuration();
     }
 
     

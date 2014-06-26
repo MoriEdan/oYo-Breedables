@@ -1,6 +1,6 @@
 //start_unprocessed_text
 /*/|/ ----------------------------------------------------------------------------------
-/|/ Database Test "Configure" Script V1.00
+/|/ Database Test "Info" Script V2.06
 /|/ ----------------------------------------------------------------------------------
 /|/ Copyright (c) 2014, Jenni Eales. All rights reserved.
 /|/ ----------------------------------------------------------------------------------
@@ -13,48 +13,115 @@
 /|/ constants
 integer DEBUG           = TRUE;
 string HTTP_HOSTNAME     = "http:/|/oyobreedables.com/";
-string HTTP_CONFIG_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.configure";
-
-string TXT_BREED         = "oYo Horses";
+string HTTP_INFO_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.Update";
 
 /|/ internal use
 key http_request_id = NULL_KEY;
 
-/|/ status
-string status = "C";
+string getLocation()
+{
+    vector pos = llGetPos();
+    return llGetRegionName() + " (" + (string) llRound(pos.x) + ", " + (string) llRound(pos.y) + ", " + (string) llRound(pos.z) + ")";
+}
 
 log(string message)
 {
     if (DEBUG) llOwnerSay(message);
 }
 
-retrieve_configuration()
+set_location(key id)
 {
-    string url = HTTP_HOSTNAME + HTTP_CONFIG_PHP; 
-    url += "&owner_name="         + llEscapeURL(llKey2Name(llGetOwner()));
-    url += "&owner_key="          + (string) llGetOwner();
-    url += "&breedable_type="     + llEscapeURL(TXT_BREED);
-    url += "&status="     + llEscapeURL(status);
-    
+    string url = HTTP_HOSTNAME + HTTP_INFO_PHP;
+    url += "&breedable_key=" + (string) id;
+    url += "&owner_name="             + llEscapeURL(llKey2Name(llGetOwner()));
+    url += "&owner_key="              + (string) llGetOwner();
+    url += "&location="               + llEscapeURL(getLocation());
+
+    /|/ update mode
+    url += "&mode="  + llEscapeURL("location");
+
     /|/ output raw
-    url += "&format="             + llEscapeURL("raw");
+    url += "&format="  + llEscapeURL("raw");
     
     log("request: " + url + " (" + (string) llStringLength(url) + " char)");
 
     /|/ send request
     http_request_id = llHTTPRequest(url, [HTTP_METHOD, "GET"], "");
 }
+set_name(key id, string name)
+{
+    string url = HTTP_HOSTNAME + HTTP_INFO_PHP;
+    url += "&breedable_key=" + (string) id;
+    url += "&breedable_name="             + llEscapeURL(name);
+    url += "&owner_name="             + llEscapeURL(llKey2Name(llGetOwner()));
+    url += "&owner_key="              + (string) llGetOwner();
+    url += "&location="               + llEscapeURL(getLocation());
 
+    /|/ update mode
+    url += "&mode="  + llEscapeURL("rename");
+
+    /|/ output raw
+    url += "&format="  + llEscapeURL("raw");
+    
+    log("request: " + url + " (" + (string) llStringLength(url) + " char)");
+
+    /|/ send request
+    http_request_id = llHTTPRequest(url, [HTTP_METHOD, "GET"], "");
+}
+/|*
+set_info(integer id, string message)
+{
+    string url = HTTP_HOSTNAME + HTTP_INFO_PHP;
+    url += "&id=" + (string) id;
+    url += "&mode=" + (string) mode;
+
+    url += "&breedable_name"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_key"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&owner_name"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&owner_key"                 + (string) llEscapeURL(TXT_STATUS);
+    
+    url += "&status"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&version"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&generation"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_dob"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_gender"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_coat"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_eyes"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_food"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_health"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_fevor"                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_walk="                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_range="                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_terrain="                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_sound="                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_title="                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_pregnant="                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_mane="                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&breedable_mate="                 + (string) llEscapeURL(TXT_STATUS);
+    url += "&location="                 + (string) llEscapeURL(TXT_STATUS);
+
+    /|/ output raw
+    url += "&format="  + llEscapeURL("raw");
+    
+    log("request: " + url + " (" + (string) llStringLength(url) + " char)");
+
+    /|/ send request
+    http_request_id = llHTTPRequest(url, [HTTP_METHOD, "GET"], "");
+}
+*|/
 display_result(string body)
 {
+    /|/body = (string)llParseString2List(body, ["<br />"], []);
     llSay(0, body);
+    
 }
 
 default
 {
     touch_start(integer total_number)
     {
-        retrieve_configuration();
+        /|/set_location(llGetKey()); /|/ update breeds location
+          set_name(llGetKey(),llGetObjectName());
     }
 
     /|/ answer of http response
@@ -111,24 +178,30 @@ default
 //mono
 
 
-string status = "C";
 key http_request_id = NULL_KEY;
-string TXT_BREED         = "oYo Horses";
+string HTTP_INFO_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.Update";
 string HTTP_HOSTNAME     = "http://oyobreedables.com/";
-string HTTP_CONFIG_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.configure";
 integer DEBUG           = TRUE;
-
-
-retrieve_configuration()
+string getLocation()
 {
-    string url = HTTP_HOSTNAME + HTTP_CONFIG_PHP; 
-    url += "&owner_name="         + llEscapeURL(llKey2Name(llGetOwner()));
-    url += "&owner_key="          + (string) llGetOwner();
-    url += "&breedable_type="     + llEscapeURL(TXT_BREED);
-    url += "&status="     + llEscapeURL(status);
+    vector pos = llGetPos();
+    return llGetRegionName() + " (" + (string) llRound(pos.x) + ", " + (string) llRound(pos.y) + ", " + (string) llRound(pos.z) + ")";
+}
+
+set_name(key id, string name)
+{
+    string url = HTTP_HOSTNAME + HTTP_INFO_PHP;
+    url += "&breedable_key=" + (string) id;
+    url += "&breedable_name="             + llEscapeURL(name);
+    url += "&owner_name="             + llEscapeURL(llKey2Name(llGetOwner()));
+    url += "&owner_key="              + (string) llGetOwner();
+    url += "&location="               + llEscapeURL(getLocation());
+
     
+    url += "&mode="  + llEscapeURL("rename");
+
     
-    url += "&format="             + llEscapeURL("raw");
+    url += "&format="  + llEscapeURL("raw");
     
     log("request: " + url + " (" + (string) llStringLength(url) + " char)");
 
@@ -137,15 +210,20 @@ retrieve_configuration()
 }
 
 
+
+
 log(string message)
 {
     if (DEBUG) llOwnerSay(message);
 }
 
 
+
 display_result(string body)
 {
+    
     llSay(0, body);
+    
 }
 
 
@@ -153,7 +231,8 @@ default
 {
     touch_start(integer total_number)
     {
-        retrieve_configuration();
+        
+          set_name(llGetKey(),llGetObjectName());
     }
 
     

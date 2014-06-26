@@ -1,6 +1,6 @@
 //start_unprocessed_text
 /*/|/ ----------------------------------------------------------------------------------
-/|/ Database Test "Configure" Script V1.00
+/|/ Database Test "Info" Script V2.06
 /|/ ----------------------------------------------------------------------------------
 /|/ Copyright (c) 2014, Jenni Eales. All rights reserved.
 /|/ ----------------------------------------------------------------------------------
@@ -13,31 +13,23 @@
 /|/ constants
 integer DEBUG           = TRUE;
 string HTTP_HOSTNAME     = "http:/|/oyobreedables.com/";
-string HTTP_CONFIG_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.configure";
-
-string TXT_BREED         = "oYo Horses";
+string HTTP_INFO_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.Information";
 
 /|/ internal use
 key http_request_id = NULL_KEY;
-
-/|/ status
-string status = "C";
 
 log(string message)
 {
     if (DEBUG) llOwnerSay(message);
 }
 
-retrieve_configuration()
+get_info(integer id)
 {
-    string url = HTTP_HOSTNAME + HTTP_CONFIG_PHP; 
-    url += "&owner_name="         + llEscapeURL(llKey2Name(llGetOwner()));
-    url += "&owner_key="          + (string) llGetOwner();
-    url += "&breedable_type="     + llEscapeURL(TXT_BREED);
-    url += "&status="     + llEscapeURL(status);
-    
+    string url = HTTP_HOSTNAME + HTTP_INFO_PHP; 
+    url += "&id=" + (string) id;
+
     /|/ output raw
-    url += "&format="             + llEscapeURL("raw");
+    url += "&format="  + llEscapeURL("raw");
     
     log("request: " + url + " (" + (string) llStringLength(url) + " char)");
 
@@ -47,14 +39,16 @@ retrieve_configuration()
 
 display_result(string body)
 {
+    body = (string)llParseString2List(body, ["<br />"], []);
     llSay(0, body);
+    
 }
 
 default
 {
     touch_start(integer total_number)
     {
-        retrieve_configuration();
+        get_info(3);
     }
 
     /|/ answer of http response
@@ -111,30 +105,10 @@ default
 //mono
 
 
-string status = "C";
 key http_request_id = NULL_KEY;
-string TXT_BREED         = "oYo Horses";
+string HTTP_INFO_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.Information";
 string HTTP_HOSTNAME     = "http://oyobreedables.com/";
-string HTTP_CONFIG_PHP    = "index.php?option=com_breedable&view=configuration&task=configuration.configure";
 integer DEBUG           = TRUE;
-
-
-retrieve_configuration()
-{
-    string url = HTTP_HOSTNAME + HTTP_CONFIG_PHP; 
-    url += "&owner_name="         + llEscapeURL(llKey2Name(llGetOwner()));
-    url += "&owner_key="          + (string) llGetOwner();
-    url += "&breedable_type="     + llEscapeURL(TXT_BREED);
-    url += "&status="     + llEscapeURL(status);
-    
-    
-    url += "&format="             + llEscapeURL("raw");
-    
-    log("request: " + url + " (" + (string) llStringLength(url) + " char)");
-
-    
-    http_request_id = llHTTPRequest(url, [HTTP_METHOD, "GET"], "");
-}
 
 
 log(string message)
@@ -143,9 +117,26 @@ log(string message)
 }
 
 
+get_info(integer id)
+{
+    string url = HTTP_HOSTNAME + HTTP_INFO_PHP; 
+    url += "&id=" + (string) id;
+
+    
+    url += "&format="  + llEscapeURL("raw");
+    
+    log("request: " + url + " (" + (string) llStringLength(url) + " char)");
+
+    
+    http_request_id = llHTTPRequest(url, [HTTP_METHOD, "GET"], "");
+}
+
+
 display_result(string body)
 {
+    body = (string)llParseString2List(body, ["<br />"], []);
     llSay(0, body);
+    
 }
 
 
@@ -153,7 +144,7 @@ default
 {
     touch_start(integer total_number)
     {
-        retrieve_configuration();
+        get_info(3);
     }
 
     
