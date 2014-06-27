@@ -20,6 +20,7 @@ class BreedableControllerConfiguration extends BreedableController
 	public function Update() {
 		// Set the data
 		$data = array(
+			'id' => $this->input->getString('id'),
 			'breedable_dob' => $this->input->getString('breedable_dob'),
 			'breedable_gender' => $this->input->getString('breedable_gender'),
 			'breedable_coat' => $this->input->getString('breedable_coat'),
@@ -202,14 +203,16 @@ http://hellzfire.cu.cc/index.php?option=com_breedable&view=configuration&task=co
 			'owner_name'     => $this->input->getString('owner_name'),
 			'owner_key'      => $this->input->getString('owner_key'),
 			'breedable_type' => $this->input->getString('breedable_type'),
+			'breedable_name' => $this->input->getString('breedable_name'),
 			'father_name'    => $this->input->getString('father_name'),
-			'father_id'      => $this->input->getInt('father_id'),
+			//'father_id'      => $this->input->getInt('father_id'),
 			'father_config'    => $this->input->getString('father_config'),
 			'mother_name'    => $this->input->getString('mother_name'),
-			'mother_id'      => $this->input->getInt('mother_id'),
+			//'mother_id'      => $this->input->getInt('mother_id'),
 			'mother_config'    => $this->input->getString('mother_config'),
 			'generation'     => $this->input->getInt('generation'),
 			'grandfather_status'     => $this->input->getString('grandfather_status'),
+			'grandmother_status'     => $this->input->getString('grandmother_status'),
 			'previous_status'     => $this->input->getString('previous_status'),
 			'current_status'     => $this->input->getString('current_status')
 		);
