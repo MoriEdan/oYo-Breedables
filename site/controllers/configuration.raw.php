@@ -65,8 +65,9 @@ class BreedableControllerConfiguration extends BreedableController
 			'breedable_type' => $this->input->getString('breedable_type'),
 			'owner_name' => $this->input->getString('owner_name'),
 			'owner_key' => $this->input->getString('owner_key'),
-			'previous_status' => $this->input->getString('previous_status'),
-			'current_status' => $this->input->getString('current_status')
+			'sibling_status' => $this->input->getString('sibling_status'),
+			'delivered_status' => $this->input->getString('delivered_status'),
+			'mode' => $this->input->getString('mode')
 		);
 
 
