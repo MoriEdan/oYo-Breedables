@@ -941,6 +941,7 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 			->where($db->quoteName('father.owner_key') . '=' . $db->quote($data['owner_key']));
 		$db->setQuery($query1);
 		$check_father = $db->loadAssoc();
+		echo $query1;
 		if(!empty($check_father)) {
 			echo "no tables exists check_father";
 		}
