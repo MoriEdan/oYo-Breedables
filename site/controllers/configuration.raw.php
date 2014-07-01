@@ -201,12 +201,12 @@ http://hellzfire.cu.cc/index.php?option=com_breedable&view=configuration&task=co
 
 		// Set the data
 		$data = array(
+			'id'      => $this->input->getInt('id'),
 			'owner_name'     => $this->input->getString('owner_name'),
 			'owner_key'      => $this->input->getString('owner_key'),
 			'breedable_type' => $this->input->getString('breedable_type'),
 			'breedable_name' => $this->input->getString('breedable_name'),
 			'father_name'    => $this->input->getString('father_name'),
-			//'father_id'      => $this->input->getInt('father_id'),
 			'father_config'    => $this->input->getString('father_config'),
 			'mother_name'    => $this->input->getString('mother_name'),
 			//'mother_id'      => $this->input->getInt('mother_id'),
