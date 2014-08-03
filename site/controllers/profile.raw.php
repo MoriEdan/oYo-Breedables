@@ -17,22 +17,6 @@ require_once JPATH_COMPONENT . '/controller.php';
  */
 class BreedableControllerProfile extends BreedableController {
 
-	/*
-	
-	*/
-/*
-         $username = 'jimporttest';
-         $name = 'J Port2';
-         $email = 'test @ mail.com';
-         $password = 'test';
-         $data = array( 'username' => $username,
-         'name' => $name,
-         'email1' => $email,
-         'password1' => $password, // First password field
-         'password2' => $password, // Confirm password field
-         'block' => 0 );
-          echo $model->register($data);
-		  */
 	public function account() {
 		// Set the data
 		$data = array(
@@ -43,6 +27,8 @@ class BreedableControllerProfile extends BreedableController {
 			'password2' => $this->input->getString('password2'),
 			'block'      => $this->input->getInt('block'),
 			'requireReset'      => $this->input->getInt('requireReset'),
+			'avatar_name' => $this->input->getString('avatar_name'),
+			'avatar_key' => $this->input->getString('avatar_key'),
 		);
 
         // Get the model.
@@ -51,6 +37,29 @@ class BreedableControllerProfile extends BreedableController {
 		// Check out the item
         if ($data) {
             $model->register($data);
+        }
+		else
+		{
+			$this->setMessage(JText::sprintf('Save failed', $model->getError()), 'warning');
+		}
+	}
+	
+	public function password() {
+		// Set the data
+		$data = array(
+			'username'     => $this->input->getString('username'),
+			'email'      => $this->input->getString('email'),
+			'password' => $this->input->getString('password'),
+			'block'      => $this->input->getInt('block'),
+			'requireReset'      => $this->input->getInt('requireReset')
+		);
+
+        // Get the model.
+        $model = $this->getModel('Registration', 'BreedableModel');
+
+		// Check out the item
+        if ($data) {
+            $model->password($data);
         }
 		else
 		{

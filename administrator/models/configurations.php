@@ -167,6 +167,7 @@ class BreedableModelConfigurations extends JModelList
                 $query->where('a.id = ' . (int) substr($search, 3));
             } else {
                 $search = $db->Quote('%' . $db->escape($search, true) . '%');
+				$query->where('( a.status LIKE '.$search.'  OR a.breedable_name LIKE '.$search.'  OR  a.mother_name LIKE '.$search.'  OR  a.father_name LIKE '.$search.' OR  a.owner_name LIKE '.$search.'  OR  a.owner_key LIKE '.$search.'  OR  a.breedable_gender LIKE '.$search.' )');
                 
             }
         }
@@ -174,7 +175,10 @@ class BreedableModelConfigurations extends JModelList
         
 
 		//Filtering owner_name
-
+		$filter_owner_name = $this->state->get("filter.owner_name");
+		if ($filter_owner_name != '') {
+			$query->where("a.owner_name = '".$db->escape($filter_owner_name)."'");
+		}
 		//Filtering status
 
 		//Filtering generation

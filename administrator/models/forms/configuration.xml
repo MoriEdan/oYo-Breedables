@@ -91,7 +91,7 @@
         filter="safehtml" /> 
 
        <field name="breedable_dob" type="calendar" class="inputbox"
-         required="true" 
+         required="false" 
         
          default="0000-00-00 00:00:00" 
         
@@ -104,32 +104,31 @@
                 
             label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_GENDER"
             description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_GENDER" 
-                 default="male" 
+                 default="M" 
                 
                  required="true" 
             menu_published="0"
             filter="raw">
-                <option value="female">Female</option>
-                <option value="male">Male</option>
+                <option value="F">Female</option>
+                <option value="M">Male</option>
                 <option value="other">Other</option>
         </field> 
 
  
-		<!--
 		<field name="filter_breedable_gender" type="list" onchange="this.form.submit();">
 			<option value="">COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_GENDER_FILTER</option>
-			<option value="female">Female</option>
-			<option value="male">Male</option>
+			<option value="F">Female</option>
+			<option value="M">Male</option>
 			<option value="other">Other</option>
 		</field> 
-		-->
+
        <field name="breedable_coat" type="text"
                 
             label="COM_BREEDABLE_FORM_LBL_CONFIGURATION_BREEDABLE_COAT"
             description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_COAT" 
                 
                 
-                 required="true" 
+                 required="false" 
             menu_published="0"
             filter="string"
             maxlength="255" /> 
@@ -140,7 +139,7 @@
             description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_BREEDABLE_EYES" 
                 
                 
-                 required="true" 
+                 required="false" 
             menu_published="0"
             filter="string"
             maxlength="255" /> 
@@ -317,7 +316,7 @@
             description="COM_BREEDABLE_FORM_DESC_CONFIGURATION_LOCATION" 
                 
                 
-                 required="true" 
+                 required="false" 
             menu_published="0"
             filter="string"
             maxlength="100" /> 

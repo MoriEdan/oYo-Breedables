@@ -615,7 +615,7 @@ class BreedableModelConfiguration extends JModelItem
 18    generation: 0....n
 19    id: database primary key
 
-oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Starter Mom-B1-0-0
+oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mom-B1-0-0
 */
     public function register( $data = null ) {
 		// Get a db connection.
@@ -816,7 +816,7 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 
 			// Fields to update.
 			$fields = array(
-				$db->quoteName('breedable_dob') . ' = ' . $db->quote($data['breedable_dob']),
+				$db->quoteName('breedable_dob') . ' = ' . $db->quote(date("Y-m-d H:i:s", $data['breedable_dob'])),
 				$db->quoteName('breedable_gender') . ' = ' . $db->quote($data['breedable_gender']),
 				$db->quoteName('breedable_coat') . ' = ' . $db->quote($data['breedable_coat']),
 				$db->quoteName('breedable_eyes') . ' = ' . $db->quote($data['breedable_eyes']),
@@ -894,7 +894,7 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 18    generation: 0....n
 19    id: database primary key
 
-oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Starter Mom-B1-0-0
+oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mom-B1-0-0
 */
     public function birth( $data = null ) {
 
@@ -914,7 +914,12 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 		$query1->from($db->quoteName('#__breedable') . ' AS father');
 		$query1->where($db->quoteName('father.breedable_name') . '=' . $db->quote($data['father_name']));
 		$query1->where($db->quoteName('father.owner_name') . '=' . $db->quote($data['owner_name']));
+		$query1->where($db->quoteName('father.owner_key') . '=' . $db->quote($data['owner_key']), 'OR');
+		// else id
+		$query1->where($db->quoteName('father.id') . '=' . (int)$father_config[19]);
+		$query1->where($db->quoteName('father.owner_name') . '=' . $db->quote($data['owner_name']));
 		$query1->where($db->quoteName('father.owner_key') . '=' . $db->quote($data['owner_key']));
+		
 		//var_dump($db->replacePrefix( (string) $query1 ) );//debug
 		$db->setQuery($query1);
 		$father_count = $db->loadResult();
@@ -1002,6 +1007,10 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 		$query4->select('COUNT( mother.id )');
 		$query4->from($db->quoteName('#__breedable') . ' AS mother');
 		$query4->where($db->quoteName('mother.breedable_name') . '=' . $db->quote($data['mother_name']));
+		$query4->where($db->quoteName('mother.owner_name') . '=' . $db->quote($data['owner_name']));
+		$query4->where($db->quoteName('mother.owner_key') . '=' . $db->quote($data['owner_key']), 'OR');
+		// else id
+		$query4->where($db->quoteName('mother.id') . '=' . (int)$mother_config[19]);
 		$query4->where($db->quoteName('mother.owner_name') . '=' . $db->quote($data['owner_name']));
 		$query4->where($db->quoteName('mother.owner_key') . '=' . $db->quote($data['owner_key']));
 		//var_dump($db->replacePrefix( (string) $query4 ) );//debug
@@ -1118,10 +1127,25 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 			->where($db->quoteName('mother.owner_key') . '=' . $db->quote($data['owner_key']));
 		$db->setQuery($query8);
 		$update_mother = $db->loadAssoc();
-		
+
+///
+		// check mother exists
+		$query9 = $db->getQuery(true);
+
+		// Select the required fields from the table.
+		$query9->select('cat.id')
+			->from($db->quoteName('#__categories') . ' AS cat');
+
+		// Join with the category
+		$query9->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']));
+		$db->setQuery($query9);
+		$breedable_type = $db->loadAssoc();
+///
+
 		// Insert columns.
 		$columns = array(
 			'breedable_name',
+			'breedable_type',
 			'father_name',
 			'father_id',
 			'mother_name',
@@ -1134,6 +1158,7 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 		// Insert values.
 		$values = array(
 			$db->quote($data['breedable_name']),
+			$db->quote($breedable_type['id']),
 			$db->quote($update_father['breedable_name']),
 			(int)$update_father['id'],
 			$db->quote($update_mother['breedable_name']),
@@ -1198,8 +1223,6 @@ oYo-Blackwalker-Inferno-1402383946-Female-100-100-0-10-0-0-1-0-Starter Dad-Start
 		// Join with the category
 		$query1->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=a.breedable_type')
 			->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']))
-			->where($db->quoteName('a.owner_name') . '=' . $db->quote($data['owner_name']))
-			->where($db->quoteName('a.owner_key') . '=' . $db->quote($data['owner_key']))
 			->where($db->quoteName('a.status') . '=' . $db->quote($data['previous_status']));
 		
 		$db->setQuery($query1);

@@ -172,7 +172,7 @@ class BreedableControllerConfiguration extends BreedableController
 	 * @link http://hellzfire.cu.cc/index.php?option=com_breedable&view=configuration&task=configuration.birth
      */
 /*
-http://hellzfire.cu.cc/index.php?option=com_breedable&view=configuration&task=configuration.birth&breedable_type=oYo%20Horses&breedable_coat=Blackwalker&breedable_eyes=Inferno&breedable_dob=1402383946&breedable_gender=Female&breedable_food=100&breedable_health=100&breedable_fevor=0&breedable_range=10&breedable_sound=0&breedable_walk=0&breedable_title=1&breedable_pregnant=0&father_name=Starter%20Dad&mother_name=Starter%20Mom&breedable_mane=B1&breedable_mate=0&breedable_terrain=0&format=raw
+http://hellzfire.cu.cc/index.php?option=com_breedable&view=configuration&task=configuration.birth&breedable_type=oYo%20Horses&breedable_coat=Blackwalker&breedable_eyes=Inferno&breedable_dob=1402383946&breedable_gender=F&breedable_food=100&breedable_health=100&breedable_fevor=0&breedable_range=10&breedable_sound=0&breedable_walk=0&breedable_title=1&breedable_pregnant=0&father_name=Starter%20Dad&mother_name=Starter%20Mom&breedable_mane=B1&breedable_mate=0&breedable_terrain=0&format=raw
 */
 /*
 0    breed

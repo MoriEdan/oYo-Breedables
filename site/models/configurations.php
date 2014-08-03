@@ -103,7 +103,10 @@ class BreedableModelConfigurations extends JModelList {
         
 
 		//Filtering owner_name
-
+		$filter_owner_name = $this->state->get("filter.owner_name");
+		if ($filter_owner_name) {
+			$query->where("a.owner_name = '".$filter_owner_name."'");
+		}
 		//Filtering status
 
 		//Filtering generation

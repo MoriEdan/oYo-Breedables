@@ -18,10 +18,10 @@ string TXT_BREED         = "oYo Horses";
 
 // test data
 string fath_name         = "Romeo";
-string fath_config         = "oYo Horses-BlackWalker-Amber-1401528763-male-100-100-0-10-1-1-1-0-Grandfather-Grandmother-B1-0-0-0-0";
+string fath_config         = "oYo Horses-BlackWalker-Amber-1401528763-M-100-100-0-10-1-1-1-0-Grandfather-Grandmother-B1-0-0-0-0";
 
 string moth_name         = "Giulia";
-string moth_config         = "oYo Horses-WhiteArab-Crimson-1401528763-female-100-100-0-10-1-1-1-0-Grandfather-Grandmother-B2-0-0-2-0";
+string moth_config         = "oYo Horses-WhiteArab-Crimson-1401528763-F-100-100-0-10-1-1-1-0-Grandfather-Grandmother-B2-0-0-2-0";
 
 // status
 //string status = "A";
