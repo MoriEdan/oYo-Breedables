@@ -17,6 +17,26 @@ require_once JPATH_COMPONENT . '/controller.php';
  */
 class BreedableControllerConfiguration extends BreedableController
 {
+	public function pregnancy() {
+		$data = array(
+			'id' => $this->input->getInt('id'),
+			'father_status' => $this->input->getString('father_status'),
+			'mother_status' => $this->input->getString('mother_status')
+		);
+
+        // Get the model.
+        $model = $this->getModel('Configuration', 'BreedableModel');
+
+        // Check out the item
+        if ($data) {
+            $model->pregnancy($data);
+        }
+		else
+		{
+			$this->setMessage(JText::sprintf('Save failed', $model->getError()), 'warning');
+		}
+	}
+
 	public function Update() {
 		// Set the data
 		$data = array(
