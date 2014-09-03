@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+              <field name="id" type="text" default="0" label="COM_BREEDABLE_FORM_LBL_QUEUED_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="breedable_id" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_QUEUED_BREEDABLE_ID"
+            description="COM_BREEDABLE_FORM_DESC_QUEUED_BREEDABLE_ID" 
+        
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="mother_name" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_QUEUED_MOTHER_NAME"
+            description="COM_BREEDABLE_FORM_DESC_QUEUED_MOTHER_NAME" 
+                 default="Dorothea (Starter)" 
+                
+                 required="true" 
+            menu_published="0"
+            filter="raw"
+            maxlength="63" /> 
+
+       <field name="mother_id" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_QUEUED_MOTHER_ID"
+            description="COM_BREEDABLE_FORM_DESC_QUEUED_MOTHER_ID" 
+         default="0" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="father_name" type="text"
+                
+            label="COM_BREEDABLE_FORM_LBL_QUEUED_FATHER_NAME"
+            description="COM_BREEDABLE_FORM_DESC_QUEUED_FATHER_NAME" 
+                 default="Wallow (Starter)" 
+                
+                 required="true" 
+            menu_published="0"
+            filter="raw"
+            maxlength="63" /> 
+
+       <field name="father_id" type="text" size="40" class="inputbox"
+        
+            label="COM_BREEDABLE_FORM_LBL_QUEUED_FATHER_ID"
+            description="COM_BREEDABLE_FORM_DESC_QUEUED_FATHER_ID" 
+         default="0" 
+        
+         required="true" 
+        filter="safehtml" /> 
+
+       <field name="status" type="list"
+                
+            label="COM_BREEDABLE_FORM_LBL_QUEUED_STATUS"
+            description="COM_BREEDABLE_FORM_DESC_QUEUED_STATUS" 
+                 default="Created" 
+                
+                 required="true" 
+            menu_published="0"
+            filter="raw"
+            multiple="false">
+                <option value="expecting">Expecting</option>
+                <option value="pregnancy">Pregnancy</option>
+        </field> 
+
+ 
+		<field name="filter_status" type="list" onchange="this.form.submit();">
+			<option value="">COM_BREEDABLE_QUEUES_STATUS_FILTER</option>
+			<option value="Created">Created</option>
+			<option value="Delivered">Delivered</option>
+			<option value="Born">Born</option>
+			<option value="Configured">Configured</option>
+		</field> 
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_BREEDABLE_FORM_LBL_QUEUED_CREATED_BY"
+            description="COM_BREEDABLE_FORM_DESC_QUEUED_CREATED_BY"  /> 
+
+         <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+        <option value="2">JARCHIVED</option>
+        <option value="-2">JTRASHED</option>
+    </field> 
+
+                        <field name="checked_out" type="hidden" filter="unset" />
+        <field name="checked_out_time" type="hidden" filter="unset" />
+
+	</fieldset>
+
+</form>

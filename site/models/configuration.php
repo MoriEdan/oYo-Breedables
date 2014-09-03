@@ -19,22 +19,43 @@ jimport('joomla.event.dispatcher');
 class BreedableModelConfiguration extends JModelItem
 {
 	public function pregnancy( $data = null ) {
-	
+		$db = JFactory::getDbo();
 		if($data['father_status'] != "")
 		{
-			$query1 = $db->getQuery(true);
+			$query2 = $db->getQuery(true)
+				->select('mother_name, mother_id, father_name, father_id')
+				->from($db->quoteName('#__breedable'))
+				->where($db->quoteName('id') . '=' . $db->quote($data['id']));
+			$db->setQuery($query2);
+			$parent = $db->loadAssoc();
 
-			// Fields to update.
-			$fields = array(
-				$db->quoteName('status') . ' = ' . $db->quote($data['father_status'])
+			// @todo get mother and father id and insert it here too
+
+			// Insert columns.
+			$columns = array(
+				'breedable_id',
+				'mother_name',
+				'mother_id',
+				'father_name',
+				'father_id',
+				'status'
 			);
 
-			// Conditions for which records should be updated.
-			$conditions = array(
-				$db->quoteName('id') . ' = ' . $db->quote($data['id'])
+			// Insert values.
+			$values = array(
+				$db->quote($data['id']),
+				$db->quote($parent['mother_name']),
+				(int) $parent['mother_id'],
+				$db->quote($parent['father_name']),
+				(int) $parent['father_id'],
+				$db->quote($data['father_status'])
 			);
 
-			$query1->update($db->quoteName('#__breedable'))->set($fields)->where($conditions);
+			// Prepare the insert query.
+			$query1 = $db->getQuery(true)
+				->insert($db->quoteName('#__breedable_queued'))
+				->columns($db->quoteName($columns))
+				->values(implode(',', $values ));
 
 			$db->setQuery($query1);
 
@@ -42,19 +63,40 @@ class BreedableModelConfiguration extends JModelItem
 		}
 		if($data['mother_status'] != "")
 		{
-			$query1 = $db->getQuery(true);
+			$query2 = $db->getQuery(true)
+				->select('mother_name, mother_id, father_name, father_id')
+				->from($db->quoteName('#__breedable'))
+				->where($db->quoteName('id') . '=' . $db->quote($data['id']));
+			$db->setQuery($query2);
+			$parent = $db->loadAssoc();
 
-			// Fields to update.
-			$fields = array(
-				$db->quoteName('status') . ' = ' . $db->quote($data['mother_status'])
+			// @todo get mother and father id and insert it here too
+
+			// Insert columns.
+			$columns = array(
+				'breedable_id',
+				'mother_name',
+				'mother_id',
+				'father_name',
+				'father_id',
+				'status'
 			);
 
-			// Conditions for which records should be updated.
-			$conditions = array(
-				$db->quoteName('id') . ' = ' . $db->quote($data['id'])
+			// Insert values.
+			$values = array(
+				$db->quote($data['id']),
+				$db->quote($parent['mother_name']),
+				(int) $parent['mother_id'],
+				$db->quote($parent['father_name']),
+				(int) $parent['father_id'],
+				$db->quote($data['father_status'])
 			);
 
-			$query1->update($db->quoteName('#__breedable'))->set($fields)->where($conditions);
+			// Prepare the insert query.
+			$query1 = $db->getQuery(true)
+				->insert($db->quoteName('#__breedable_queued'))
+				->columns($db->quoteName($columns))
+				->values(implode(',', $values ));
 
 			$db->setQuery($query1);
 
@@ -127,7 +169,14 @@ class BreedableModelConfiguration extends JModelItem
 			$query1->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=c.breedable_type')
 				->select('cat.title as category_title');
 
+			// Joing with the mother
+			$query1->join('LEFT', $db->quoteName('#__breedable_queued') . ' as mother ON mother.breedable_id=c.mother_id');
+			
+			// Joing with the father
+			$query1->join('LEFT', $db->quoteName('#__breedable_queued') . ' as father ON father.breedable_id=c.father_id');
+
 			$query1->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']));
+
 			if($db->quote($data['owner_name']) != "") {
 				$query1->where($db->quoteName('c.owner_name') . '=' . $db->quote($data['owner_name']));
 			}
@@ -135,32 +184,42 @@ class BreedableModelConfiguration extends JModelItem
 				$query1->where($db->quoteName('c.owner_key') . '=' . $db->quote($data['owner_key']));
 			}
 			$query1->where($db->quoteName('c.status') . '=' . $db->quote($data['delivered_status']));
-			//$query1->where('(' . $db->quoteName('c.status') . '=' . $db->quote($data['delivered_status']) . ' OR ' . $db->quoteName('c.status') . '=' . $db->quote('Created') . ')');
+			
+			$query1->where($db->quoteName('mother.status') . '=' . $db->quote('pregnancy'));
+			
+			$query1->where($db->quoteName('father.status') . '=' . $db->quote('expecting'));
 
 			$db->setQuery($query1);
-			
-			$sibling_configure = $db->loadAssoc();
 
-//echo print_r($sibling_configure, true);
-//var_dump($db->replacePrefix( (string) $query1 ) );
+			$sibling_configure = $db->loadAssoc();
 
 			$query2 = $db->getQuery(true);
 
-			// Fields to update.
-			$fields = array(
-				$db->quoteName('status') . ' = ' . $db->quote($data['sibling_status'])
-			);
-
-			// Conditions for which records should be updated.
+			// delete all custom keys for user 1001.
 			$conditions = array(
-				$db->quoteName('id') . ' = ' . $db->quote($sibling_configure['id'])
+				$db->quoteName('breedable_id') . ' = ' . $db->quote($sibling_configure['mother_id'])
 			);
 
-			$query2->update($db->quoteName('#__breedable'))->set($fields)->where($conditions);
+			$query2->delete($db->quoteName('#__breedable_queued'));
+			$query2->where($conditions);
 
 			$db->setQuery($query2);
 
-			$result = $db->query();
+			$db->execute();
+			
+			$query3 = $db->getQuery(true);
+
+			// delete all custom keys for user 1001.
+			$conditions = array(
+				$db->quoteName('breedable_id') . ' = ' . $db->quote($sibling_configure['father_id'])
+			);
+
+			$query3->delete($db->quoteName('#__breedable_queued'));
+			$query3->where($conditions);
+
+			$db->setQuery($query3);
+
+			$db->execute();
 
 			//echo print_r($sibling_configure, true);
 			// output sibling configure database
@@ -191,131 +250,58 @@ class BreedableModelConfiguration extends JModelItem
 			$query3 = $db->getQuery(true);
 
 			// Select the required fields from the table.
-			$query3->select('c.id, c.father_name, c.father_id, c.breedable_type, c.breedable_name, c.owner_name, c.owner_key, c.status');
-			$query3->from($db->quoteName('#__breedable') . ' AS c');
+			$query3->select('c.id')
+				->select('c.breedable_type')
+				->select('c.breedable_name')
+				->select('c.breedable_key')
+				->select('c.owner_name')
+				->select('c.owner_key')
+				->select('c.status')
+				->select('c.version')
+				->select('c.generation')
+				->select('c.breedable_dob')
+				->select('c.breedable_gender')
+				->select('c.breedable_coat')
+				->select('c.breedable_eyes')
+				->select('c.breedable_food')
+				->select('c.breedable_health')
+				->select('c.breedable_fevor')
+				->select('c.breedable_walk')
+				->select('c.breedable_range')
+				->select('c.breedable_terrain')
+				->select('c.breedable_sound')
+				->select('c.breedable_title')
+				->select('c.breedable_pregnant')
+				->select('c.breedable_mane')
+				->select('c.breedable_mate')
+				->select('c.bundle_key')
+				->select('c.mother_name')
+				->select('c.mother_id')
+				->select('c.father_name')
+				->select('c.father_id')
+				->select('c.location')
+				->from($db->quoteName('#__breedable') . ' AS c');
 
 			// Join with the category
 			$query3->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=c.breedable_type')
 				->select('cat.title as category_title');
+
+			// Joing with the sibling mother
+			$query3->join('LEFT', $db->quoteName('#__breedable_queued') . ' as queued ON queued.breedable_id=c.id');
+
+			// Joing with the sibling
+			//$query3->join('LEFT', $db->quoteName('#__breedable') . ' as sibling ON sibling.father_id=c.id');
+
+
 			$query3->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']) . ' AND ' .
-			$db->quoteName('c.status') . '=' . $db->quote('expecting') . ' AND ' .
-			$db->quoteName('c.father_id') . '!=' . $db->quote('0') . ' OR ' .
-			//$db->quoteName('c.owner_name') . '=' . $db->quote($data['owner_name']) . ' AND ' .
-			//$db->quoteName('c.owner_key') . '=' . $db->quote($data['owner_key']) . ' OR' .
-			// Check Delivered
-			$db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']) . ' AND ' .
-			$db->quoteName('c.status') . '=' . $db->quote($data['delivered_status']) . ' AND ' .
-			$db->quoteName('c.father_id') . '=' . $db->quote('0') . ' OR ' .
-			//$db->quoteName('c.owner_name') . '=' . $db->quote($data['owner_name']) . ' AND ' .
-			//$db->quoteName('c.owner_key') . '=' . $db->quote($data['owner_key']) . ' OR' .
-			// Check Born
-			$db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']) . ' AND ' .
-			$db->quoteName('c.status') . '=' . $db->quote('Born') . ' AND ' .
-			$db->quoteName('c.father_id') . '=' . $db->quote('0'));
-			//$db->quoteName('c.owner_name') . '=' . $db->quote($data['owner_name']) . ' AND ' .
-			//$db->quoteName('c.owner_key') . '=' . $db->quote($data['owner_key']));
-/*
-			$query3->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=c.breedable_type')
-				->select('cat.title as category_title');
-*/
-/*
-			$query3->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']));
-			$query3->where($db->quoteName('c.status') . '=' . $db->quote('pregnancy') . ' AND ' . $db->quoteName('c.father_id') . '!=' . $db->quote('0') . ' OR ' . $db->quoteName('c.status') . '=' . $db->quote($data['delivered_status']) . ' AND ' . $db->quoteName('c.father_id') . '=' . $db->quote('0') . ' OR ' . $db->quoteName('c.status') . '=' . $db->quote('Born') . ' AND ' . $db->quoteName('c.father_id') . '=' . $db->quote('0'));
-			
+			$db->quoteName('queued.status') . '=' . $db->quote('expecting') . ' AND ' .
+			$db->quoteName('c.owner_name') . '=' . $db->quote($data['owner_name']) . ' AND ' .
+			$db->quoteName('c.owner_key') . '=' . $db->quote($data['owner_key']));
 
-			$query3->where($db->quoteName('c.owner_name') . '=' . $db->quote($data['owner_name']));
-			
-			$query3->where($db->quoteName('c.owner_key') . '=' . $db->quote($data['owner_key']));
-*/
+			//if( $data['owner_name'] == "Revolution Perenti" ) var_dump($db->replacePrefix( (string) $query3 ) );//debug
 
-/*
-string father_status = "expecting";
-    string mother_status = "pregnancy";   
-*/
-/*
-			if( $data['owner_name'] == "Revolution Perenti" || $data['owner_name'] == "Aine Meredith" && $data['owner_key'] == "4994f9fe-526a-4d9f-ac0f-d927757d0656" || $data['owner_key'] == "b63970b4-bba7-42bb-9747-29f0b863bbd2")
-			{
-				$query3->where($db->quoteName('c.status') . '=' . $db->quote('expecting'));
-			}
-			else
-			{
-				$query3->where('(' . $db->quoteName('c.status') . '=' . $db->quote($data['delivered_status']) . ' OR ' . $db->quoteName('c.status') . '=' . $db->quote('Born') . ')');
-			}
-*/
 			$db->setQuery($query3);
-			
-			$father_configure = $db->loadAssoc();
-			
-			$query4 = $db->getQuery(true);
 
-			// Select the required fields from the table.
-			$query4->select('f.id')
-				->select('f.breedable_type')
-				->select('f.breedable_name')
-				->select('f.breedable_key')
-				->select('f.owner_name')
-				->select('f.owner_key')
-				->select('f.status')
-				->select('f.version')
-				->select('f.generation')
-				->select('f.breedable_dob')
-				->select('f.breedable_gender')
-				->select('f.breedable_coat')
-				->select('f.breedable_eyes')
-				->select('f.breedable_food')
-				->select('f.breedable_health')
-				->select('f.breedable_fevor')
-				->select('f.breedable_walk')
-				->select('f.breedable_range')
-				->select('f.breedable_terrain')
-				->select('f.breedable_sound')
-				->select('f.breedable_title')
-				->select('f.breedable_pregnant')
-				->select('f.breedable_mane')
-				->select('f.breedable_mate')
-				->select('f.bundle_key')
-				->select('f.mother_name')
-				->select('f.mother_id')
-				->select('f.father_name')
-				->select('f.father_id')
-				->select('f.location')
-				->from($db->quoteName('#__breedable') . ' AS f');
-
-			// Join with the category
-			$query4->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=f.breedable_type')
-				->select('cat.title as category_title');
-			//pregnancy
-			$query4->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']) . ' AND ' .
-			$db->quoteName('f.father_id') . '!=' . $db->quote('0') . ' AND ' .
-			$db->quoteName('f.breedable_gender') . '=' . $db->quote('M') . ' AND ' .
-			$db->quoteName('f.status') . '=' . $db->quote('expecting') . ' AND ' .
-			$db->quoteName('f.owner_name') . '=' . $db->quote($father_configure['owner_name']) . ' AND ' .
-			$db->quoteName('f.owner_key') . '=' . $db->quote($father_configure['owner_key']) . ' OR ' .
-
-			//delivered
-			$db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']) . ' AND ' .
-			$db->quoteName('f.father_name') . '=' . $db->quote($father_configure['father_name']) . ' AND ' .
-			$db->quoteName('f.breedable_gender') . '=' . $db->quote('M') . ' AND ' .
-			$db->quoteName('f.status') . '=' . $db->quote($data['delivered_status']) . ' AND ' .
-			$db->quoteName('f.owner_name') . '=' . $db->quote($data['owner_name']) . ' AND ' .
-			$db->quoteName('f.owner_key') . '=' . $db->quote($data['owner_key']) . ' OR ' .
-
-			// Born
-			$db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']) . ' AND ' .
-			$db->quoteName('f.father_name') . '=' . $db->quote($father_configure['father_name']) . ' AND ' .
-			$db->quoteName('f.breedable_gender') . '=' . $db->quote('M') . ' AND ' .
-			$db->quoteName('f.status') . '=' . $db->quote('Born') . ' AND ' .
-			$db->quoteName('f.owner_name') . '=' . $db->quote($data['owner_name']) . ' AND ' .
-			$db->quoteName('f.owner_key') . '=' . $db->quote($data['owner_key']));
-/*
-string father_status = "expecting";
-    string mother_status = "pregnancy";   
-*/
-			//$query4->where($db->quoteName('f.status') . '=' . $db->quote('pregnancy') . ' AND ' . $db->quoteName('f.mother_id') . '!=' . $db->quote('0') . ' OR ' . $db->quoteName('f.status') . '=' . $db->quote($data['delivered_status']) . ' OR ' . $db->quoteName('f.status') . '=' . $db->quote('Born'));
-			
-			$db->setQuery($query4);
-			//if( $data['owner_name'] == "Revolution Perenti" ) var_dump($db->replacePrefix( (string) $query4 ) );//debug
-			
 			$father = $db->loadAssoc();
 
 			//echo print_r($father, true);
@@ -342,158 +328,59 @@ string father_status = "expecting";
 			$output .= $father['id'];
 			echo $output;
 
-			if( $father['status'] == "expecting" )
-			{
-				$query5 = $db->getQuery(true);
-
-				// Fields to update.
-				$fields = array(
-					$db->quoteName('status') . ' = ' . $db->quote('Born')
-				);
-
-				// Conditions for which records should be updated.
-				$conditions = array(
-					$db->quoteName('id') . '=' . $db->quote($father['id'])
-				);
-
-				$query5->update($db->quoteName('#__breedable'))->set($fields)->where($conditions);
-
-				$db->setQuery($query5);
-
-				$db->execute();
-			}
 		}
 		if($data['mode'] == "mother") {
 
 			$query5 = $db->getQuery(true);
 
 			// Select the required fields from the table.
-			$query5->select('c.id, c.breedable_type, c.breedable_name, c.owner_name, c.owner_key, c.status, c.mother_id, c.mother_name');
-			$query5->from($db->quoteName('#__breedable') . ' AS c');
+			$query5->select('c.id')
+				->select('c.breedable_type')
+				->select('c.breedable_name')
+				->select('c.owner_name')
+				->select('c.owner_key')
+				->select('c.status')
+				->select('c.version')
+				->select('c.generation')
+				->select('c.breedable_dob')
+				->select('c.breedable_gender')
+				->select('c.breedable_coat')
+				->select('c.breedable_eyes')
+				->select('c.breedable_food')
+				->select('c.breedable_health')
+				->select('c.breedable_fevor')
+				->select('c.breedable_walk')
+				->select('c.breedable_range')
+				->select('c.breedable_terrain')
+				->select('c.breedable_sound')
+				->select('c.breedable_title')
+				->select('c.breedable_pregnant')
+				->select('c.breedable_mane')
+				->select('c.breedable_mate')
+				->select('c.bundle_key')
+				->select('c.mother_name')
+				->select('c.mother_id')
+				->select('c.father_name')
+				->select('c.father_id')
+				->select('c.location')
+				->from($db->quoteName('#__breedable') . ' AS c');
+
 			$query5->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=c.breedable_type')
 				->select('cat.title as category_title');
+
+			// Joing with the sibling
+			$query5->join('LEFT', $db->quoteName('#__breedable_queued') . ' as queued ON queued.breedable_id=c.id');
+
 			$query5->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']) . ' AND ' .
-			$db->quoteName('c.status') . '=' . $db->quote('pregnancy') . ' AND ' .
-			$db->quoteName('c.mother_id') . '!=' . $db->quote('0') . ' AND ' .
-			$db->quoteName('c.owner_name') . '=' . $db->quote($data['owner_name']) . ' AND ' .
-			$db->quoteName('c.owner_key') . '=' . $db->quote($data['owner_key']) . ' OR' .
-			// Check Delivered
-			$db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']) . ' AND ' .
-			$db->quoteName('c.status') . '=' . $db->quote($data['delivered_status']) . ' AND ' .
-			$db->quoteName('c.mother_id') . '=' . $db->quote('0') . ' AND ' .
-			$db->quoteName('c.owner_name') . '=' . $db->quote($data['owner_name']) . ' AND ' .
-			$db->quoteName('c.owner_key') . '=' . $db->quote($data['owner_key']) . ' OR' .
-			// Check Born
-			$db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']) . ' AND ' .
-			$db->quoteName('c.status') . '=' . $db->quote('Born') . ' AND ' .
-			$db->quoteName('c.mother_id') . '=' . $db->quote('0') . ' AND ' .
+			$db->quoteName('queued.status') . '=' . $db->quote('pregnancy') . ' AND ' .
+			//$db->quoteName('c.mother_id') . '!=' . $db->quote('0') . ' AND ' .
 			$db->quoteName('c.owner_name') . '=' . $db->quote($data['owner_name']) . ' AND ' .
 			$db->quoteName('c.owner_key') . '=' . $db->quote($data['owner_key']));
-			//. ' OR ' . $db->quoteName('c.status') . '=' . $db->quote($data['delivered_status']) . ' AND ' . $db->quoteName('c.mother_id') . '=' . $db->quote('0') . ' OR ' . $db->quoteName('c.status') . '=' . $db->quote('Born') . ' AND ' . $db->quoteName('c.mother_id') . '=' . $db->quote('0')
-
-/*
-SELECT c.id, c.breedable_type, c.breedable_name, c.owner_name, c.owner_key, c.status, c.mother_id, c.mother_name,cat.title as category_title
-FROM `ckr7a_breedable` AS c
-LEFT JOIN `ckr7a_categories` as cat ON cat.id=c.breedable_type
-WHERE `cat`.`title`='oYo DoDos SL'
-AND `c`.`owner_name`='Revolution Perenti'
-AND `c`.`owner_key`='4994f9fe-526a-4d9f-ac0f-d927757d0656'
-AND `c`.`status`='pregnancy'
-AND `c`.`mother_id`!='0'
-OR `cat`.`title`='oYo DoDos SL'
-AND `c`.`owner_name`='Revolution Perenti'
-AND `c`.`owner_key`='4994f9fe-526a-4d9f-ac0f-d927757d0656'
-AND `c`.`status`='Delivered'
-AND `c`.`mother_id`='0'
-OR `cat`.`title`='oYo DoDos SL'
-AND `c`.`owner_name`='Revolution Perenti'
-AND `c`.`owner_key`='4994f9fe-526a-4d9f-ac0f-d927757d0656'
-AND `c`.`status`='Born'
-AND `c`.`mother_id`='0'
-*/
-/*
-string father_status = "expecting";
-    string mother_status = "pregnancy";   
-*/
-			//if( $data['owner_name'] == "Revolution Perenti" ) var_dump($db->replacePrefix( (string) $query5 ) );//debug
 
 			$db->setQuery($query5);
 			
-			$parent_configure = $db->loadAssoc();
-			//echo print_r($parent_configure, true);
-			$query6 = $db->getQuery(true);
+			//var_dump($db->replacePrefix( (string) $query5 ) );//debug
 
-			// Select the required fields from the table.
-			$query6->select('mother.id')
-				->select('mother.breedable_type')
-				->select('mother.breedable_name')
-				//->select('mother.breedable_key')
-				->select('mother.owner_name')
-				->select('mother.owner_key')
-				->select('mother.status')
-				->select('mother.version')
-				->select('mother.generation')
-				->select('mother.breedable_dob')
-				->select('mother.breedable_gender')
-				->select('mother.breedable_coat')
-				->select('mother.breedable_eyes')
-				->select('mother.breedable_food')
-				->select('mother.breedable_health')
-				->select('mother.breedable_fevor')
-				->select('mother.breedable_walk')
-				->select('mother.breedable_range')
-				->select('mother.breedable_terrain')
-				->select('mother.breedable_sound')
-				->select('mother.breedable_title')
-				->select('mother.breedable_pregnant')
-				->select('mother.breedable_mane')
-				->select('mother.breedable_mate')
-				->select('mother.bundle_key')
-				->select('mother.mother_name')
-				->select('mother.mother_id')
-				->select('mother.father_name')
-				->select('mother.father_id')
-				->select('mother.location')
-				->from($db->quoteName('#__breedable') . ' AS mother');
-
-			// Join with the category
-			$query6->join('LEFT', $db->quoteName('#__categories') . ' as cat ON cat.id=mother.breedable_type')
-				->select('cat.title as category_title');
-
-			$query6->where($db->quoteName('cat.title') . '=' . $db->quote($data['breedable_type']));
-
-			if( $parent_configure['mother_id'] != 0) {
-				$query6->where($db->quoteName('mother.mother_id') . '=' . $db->quote($parent_configure['mother_id']));
-			}
-			else
-			{
-				$query6->where($db->quoteName('mother.mother_name') . '=' . $db->quote($parent_configure['mother_name']));
-			}
-			if($db->quote($data['owner_name']) != $db->quote($parent_configure['owner_name']) ) {
-				$query6->where($db->quoteName('mother.owner_name') . '=' . $db->quote($parent_configure['owner_name']));
-			}
-			else
-			{
-				$query6->where($db->quoteName('mother.owner_name') . '=' . $db->quote($data['owner_name']));
-			}
-			if($db->quote($data['owner_key']) != $db->quote($parent_configure['owner_key']) ) {
-				$query6->where($db->quoteName('mother.owner_key') . '=' . $db->quote($parent_configure['owner_key']));
-			}
-			else
-			{
-				$query6->where($db->quoteName('mother.owner_key') . '=' . $db->quote($data['owner_key']));
-			}
-			$query6->where($db->quoteName('mother.breedable_gender') . '=' . $db->quote('F'));
-/*
-string father_status = "expecting";
-    string mother_status = "pregnancy";   
-*/
-
-			//$query6->where($db->quoteName('mother.status') . '=' . $db->quote('pregnancy') . ' AND ' . $db->quoteName('mother.mother_id') . '!=' . $db->quote('0') . ' OR ' . $db->quoteName('mother.status') . '=' . $db->quote($data['delivered_status']) . ' OR ' . $db->quoteName('mother.status') . '=' . $db->quote('Born'));
-			$query6->where($db->quoteName('mother.status') . '=' . $db->quote('pregnancy') . ' AND ' . $db->quoteName('mother.mother_id') . '!=' . $db->quote('0') . ' OR ' . $db->quoteName('mother.status') . '=' . $db->quote($data['delivered_status']) . ' AND ' . $db->quoteName('mother.mother_id') . '=' . $db->quote('0') . ' OR ' . $db->quoteName('mother.status') . '=' . $db->quote('Born') . ' AND ' . $db->quoteName('mother.mother_id') . '=' . $db->quote('0'));
-			
-			//var_dump($db->replacePrefix( (string) $query6 ) );//debug
-			$db->setQuery($query6);
 			$mother_config = $db->loadAssoc();
 
 			//echo print_r($mother_config, true);
@@ -519,28 +406,6 @@ string father_status = "expecting";
 			$output .= $mother_config['generation'] . "-";
 			$output .= $mother_config['id'];
 			echo $output;
-
-			if( $mother_config['status'] == "pregnancy" )
-			{
-				$query7 = $db->getQuery(true);
-
-				// Fields to update.
-				$fields = array(
-					$db->quoteName('status') . ' = ' . $db->quote('Born')
-				);
-
-				// Conditions for which records should be updated.
-				$conditions = array(
-					$db->quoteName('id') . '=' . $db->quote($mother_config['id']),
-					$db->quoteName('status') . '=' . $db->quote('pregnancy')
-				);
-
-				$query7->update($db->quoteName('#__breedable'))->set($fields)->where($conditions);
-
-				$db->setQuery($query7);
-
-				$db->execute();
-			}
 		}
 	}
 
@@ -755,7 +620,7 @@ oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mo
 
 		// Set the query using our newly populated query object and execute it.
 		$db->setQuery($query4);
-		$db->query();
+		$db->execute();
 		$breedable_id = $db->insertid();
 		echo $breedable_id;
 	}
@@ -784,7 +649,7 @@ oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mo
 
 			$db->setQuery($query1);
 
-			$result = $db->query();
+			$db->execute();
 		}
 		if($data['mode'] == "rename") {
 
@@ -891,7 +756,7 @@ oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mo
 
 			$db->setQuery($query3);
 
-			$result = $db->query();
+			$db->execute();
 		}
 		if($data['mode'] == "birth") {
 			$query4 = $db->getQuery(true);
@@ -923,7 +788,7 @@ oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mo
 
 			$db->setQuery($query4);
 
-			$result = $db->query();
+			$db->execute();
 		}
 		if($data['mode'] == "owner") {
 			$query5 = $db->getQuery(true);
@@ -943,7 +808,7 @@ oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mo
 
 			$db->setQuery($query5);
 
-			$result = $db->query();
+			$db->execute();
 		}
 	}
 
@@ -1086,7 +951,7 @@ oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mo
 
 			// Set the query using our newly populated query object and execute it.
 			$db->setQuery($query3);
-			$db->query();
+			$db->execute();
 
 		}
 
@@ -1186,7 +1051,7 @@ oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mo
 
 			// Set the query using our newly populated query object and execute it.
 			$db->setQuery($query6);
-			$db->query();
+			$db->execute();
 
 		}
 
@@ -1274,7 +1139,7 @@ oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mo
 
 		// Set the query using our newly populated query object and execute it.
 		$db->setQuery($query9);
-		$db->query();
+		$db->execute();
 		
 	}
 
@@ -1344,7 +1209,7 @@ oYo-Blackwalker-Inferno-1402383946-F-100-100-0-10-0-0-1-0-Starter Dad-Starter Mo
 
 		$db->setQuery($query2);
 
-		$result = $db->query();
+		$db->execute();
 	}
     /**
      * Method to auto-populate the model state.

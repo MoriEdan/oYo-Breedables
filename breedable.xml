@@ -7,7 +7,7 @@
     <author>Stephen Bishop</author>
     <authorEmail>dazzle.software@gmail.com</authorEmail>
     <authorUrl>http://dazzlesoftware.org</authorUrl>
-    <version>1.0.13</version>
+    <version>1.0.14</version>
     <description>One of the most popular pastimes in Second Life is the caring for, feeding and breeding of virtual animals in Second Life.</description>
     
     <install> <!-- Runs on install -->
@@ -42,11 +42,9 @@
     <administration>
         <menu img="components/com_breedable/assets/images/s_com_breedable.png" >COM_BREEDABLE</menu>
         <submenu>
-            
 			<menu link="option=com_breedable&amp;view=configurations" view="configurations" img="components/com_breedable/assets/images/s_configurations.png" alt="Breedable/Configurations">COM_BREEDABLE_TITLE_CONFIGURATIONS</menu>
-
+			<menu link="option=com_breedable&amp;view=queues" view="queues" img="components/com_breedable/assets/images/s_queues.png" alt="Breedable/Queues">COM_BREEDABLE_TITLE_QUEUES</menu>
 			<menu link="option=com_categories&amp;extension=com_breedable" view="categories" img="components/com_breedable/assets/images/s_configurations.png" alt="Breedable/Categories">COM_BREEDABLE_CONFIGURATIONS_BREEDABLE_TYPE</menu>
-
         </submenu>
         <files folder="administrator">
             <filename>access.xml</filename>

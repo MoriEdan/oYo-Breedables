@@ -19,10 +19,15 @@ class BreedableHelper
      * Configure the Linkbar.
      */
     public static function addSubmenu($vName = '') {
-        		JHtmlSidebar::addEntry(
+        JHtmlSidebar::addEntry(
 			JText::_('COM_BREEDABLE_TITLE_CONFIGURATIONS'),
 			'index.php?option=com_breedable&view=configurations',
 			$vName == 'configurations'
+		);
+        JHtmlSidebar::addEntry(
+			JText::_('COM_BREEDABLE_TITLE_QUEUES'),
+			'index.php?option=com_breedable&view=queues',
+			$vName == 'queues'
 		);
 		JHtmlSidebar::addEntry(
 			'Breedable (Types)',
